@@ -1,0 +1,30 @@
+{
+  "name": "atelier",
+  "version": "1.0.0",
+  "description": "Two-agent post-generation quality gate (UI/UX Critic & Backend Architecture Guard) for vibe-coded apps",
+  "scripts": {
+    "sync-adapters": "node scripts/sync-adapters.js",
+    "check-sync": "node scripts/check-sync.js",
+    "build": "cd mcp-server && npm run build",
+    "benchmark": "tsx benchmarks/runner.ts",
+    "test": "node scripts/check-sync.js"
+  },
+  "keywords": [
+    "atelier",
+    "quality-gate",
+    "ui-critic",
+    "backend-guard",
+    "ai-agent",
+    "cursor",
+    "windsurf",
+    "claude-code",
+    "antigravity",
+    "mcp"
+  ],
+  "author": "Atelier Authors",
+  "license": "MIT",
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.4.5"
+  }
+}

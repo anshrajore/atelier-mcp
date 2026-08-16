@@ -1,0 +1,33 @@
+{
+  "name": "@atelier/mcp-server",
+  "version": "1.0.0",
+  "description": "Model Context Protocol server for Atelier post-generation UI/UX and backend quality gates",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "atelier-mcp": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "start": "node dist/index.js"
+  },
+  "keywords": [
+    "mcp",
+    "quality-gate",
+    "ai-agent",
+    "ui-critic",
+    "backend-guard",
+    "vibe-coding"
+  ],
+  "author": "Atelier Authors",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.6.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "typescript": "^5.4.5"
+  }
+}

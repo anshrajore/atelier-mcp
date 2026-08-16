@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AtelierDistillationTriple",
+  "type": "object",
+  "properties": {
+    "id": { "type": "string" },
+    "critic": { "type": "string", "enum": ["ui", "backend"] },
+    "language": { "type": "string" },
+    "framework": { "type": "string" },
+    "flawed_code": { "type": "string" },
+    "critique": {
+      "type": "object",
+      "properties": {
+        "score": { "type": "number" },
+        "summary": { "type": "string" },
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "ruleId": { "type": "string" },
+              "severity": { "type": "string" },
+              "title": { "type": "string" },
+              "explanation": { "type": "string" },
+              "concreteFix": { "type": "string" },
+              "diff": { "type": "string" }
+            },
+            "required": ["ruleId", "severity", "title", "explanation", "concreteFix"]
+          }
+        }
+      },
+      "required": ["score", "findings"]
+    },
+    "fixed_code": { "type": "string" }
+  },
+  "required": ["id", "critic", "flawed_code", "critique", "fixed_code"]
+}

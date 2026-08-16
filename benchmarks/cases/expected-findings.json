@@ -1,0 +1,17 @@
+{
+  "ui-generic-dashboard.tsx": {
+    "critic": "ui",
+    "expectedRules": ["UI-105", "UI-106", "UI-107", "UI-101", "UI-110"],
+    "minFindings": 4
+  },
+  "backend-vulnerable-api.ts": {
+    "critic": "backend",
+    "expectedRules": ["BE-201", "BE-202", "BE-204"],
+    "minFindings": 3
+  },
+  "pipeline-orphan-workflow.json": {
+    "critic": "backend",
+    "expectedRules": ["BE-206"],
+    "minFindings": 1
+  }
+}
