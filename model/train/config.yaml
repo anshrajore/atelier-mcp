@@ -1,0 +1,51 @@
+# Atelier LoRA Training Configuration
+base_model: "Qwen/Qwen2.5-Coder-7B-Instruct"
+output_dir: "./checkpoints/atelier-qwen-7b-lora"
+merged_output_dir: "./models/atelier-critic-7b-merged"
+gguf_output_path: "./models/atelier-critic-7b-q4_k_m.gguf"
+
+dataset:
+  train_path: "../data-gen/dataset/train.jsonl"
+  val_path: "../data-gen/dataset/val.jsonl"
+  test_path: "../data-gen/dataset/test.jsonl"
+  split_ratio: [0.90, 0.05, 0.05]
+  max_seq_length: 4096
+
+lora:
+  r: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+  bias: "none"
+  task_type: "CAUSAL_LM"
+  target_modules:
+    - "q_proj"
+    - "k_proj"
+    - "v_proj"
+    - "o_proj"
+    - "gate_proj"
+    - "up_proj"
+    - "down_proj"
+
+quantization:
+  load_in_4bit: true
+  bnb_4bit_quant_type: "nf4"
+  bnb_4bit_compute_dtype: "bfloat16"
+  bnb_4bit_use_double_quant: true
+
+training:
+  per_device_train_batch_size: 4
+  per_device_eval_batch_size: 4
+  gradient_accumulation_steps: 4
+  learning_rate: 0.0002
+  lr_scheduler_type: "cosine"
+  warmup_ratio: 0.03
+  weight_decay: 0.01
+  num_train_epochs: 3
+  logging_steps: 10
+  eval_strategy: "steps"
+  eval_steps: 50
+  save_strategy: "steps"
+  save_steps: 100
+  save_total_limit: 3
+  fp16: false
+  bf16: true

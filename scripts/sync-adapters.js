@@ -12,10 +12,9 @@ if (!fs.existsSync(SKILL_PATH)) {
 
 const skillContent = fs.readFileSync(SKILL_PATH, 'utf8');
 
-// Extract UI rules (UI-1xx) and Backend rules (BE-2xx)
 function extractRules(content) {
-  const uiRegex = /- \*\*`(UI-\d+): ([^`]+)`\*\*\s*\n\s*- \*\*Requirement\*\*: ([^\n]+)/g;
-  const beRegex = /- \*\*`(BE-\d+): ([^`]+)`\*\*\s*\n\s*- \*\*Requirement\*\*: ([^\n]+)/g;
+  const uiRegex = /### `(BASE-UI-\d+): ([^`]+)`\s*\n\s*- \*\*Statement\*\*: ([^\n]+)/g;
+  const beRegex = /### `(BASE-BE-\d+): ([^`]+)`\s*\n\s*- \*\*Statement\*\*: ([^\n]+)/g;
 
   const uiRules = [];
   let match;
@@ -37,11 +36,15 @@ function generateCoreRuleset() {
   return [
     'You must strictly obey the Atelier post-generation quality gate rules for all code generation:',
     '',
-    '## UI/UX CRITIC RULES',
+    '## UNIVERSAL UI/UX RULES',
     ...uiRules,
     '',
-    '## BACKEND ARCHITECTURE GUARD RULES',
+    '## UNIVERSAL BACKEND ARCHITECTURE RULES',
     ...beRules,
+    '',
+    '## FRAMEWORK PRESETS (Available in skills/atelier/presets/)',
+    '- Next.js + Tailwind: `skills/atelier/presets/nextjs-tailwind.md` (17 gradeable rules)',
+    '- n8n Workflows: `skills/atelier/presets/n8n.md` (13 gradeable rules)',
     ''
   ].join('\n');
 }
