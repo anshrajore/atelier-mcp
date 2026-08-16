@@ -10,7 +10,7 @@ This preset extends `SKILL.md` with deterministic, mechanically verifiable rules
 - **Statement**: Components must use standard Tailwind font-size utilities (`text-xs`, `text-sm`, `text-base`, `text-lg`, `text-xl`, `text-2xl`, `text-3xl`, `text-4xl`, `text-5xl`). Arbitrary pixel sizing like `text-[17px]` is forbidden.
 - **Pass/Fail Threshold**: Zero occurrences of `text-[\d+px]` or `text-[\d+rem]`.
 - **Violation Example**: `<h2 className="text-[22px] font-bold">`
-- **check:** `regex: \btext-\[\d+(?:px|rem)\]\b -> count matches -> fail if count > 0`
+- **check:** `regex: text-\[\d+(?:px|rem)\] -> count matches -> fail if count > 0`
 
 ### `NEXT-UI-102: Minimum Body Text Size (>= 14px)`
 - **Statement**: Paragraph and body text elements must never render smaller than `text-sm` (14px). `text-xs` (12px) is restricted to metadata overlines, badges, and timestamps.
@@ -38,13 +38,13 @@ This preset extends `SKILL.md` with deterministic, mechanically verifiable rules
 - **Statement**: Margins, paddings, and flex/grid gaps must use standard 4px/8px Tailwind spacing scale tokens (`0`, `0.5`, `1`, `1.5`, `2`, `2.5`, `3`, `4`, `5`, `6`, `8`, `10`, `12`, `16`, `20`, `24`, `32`).
 - **Pass/Fail Threshold**: Zero occurrences of arbitrary brackets on spacing utilities (`p-[13px]`, `m-[7px]`, `gap-[19px]`, `top-[23px]`).
 - **Violation Example**: `<div className="p-[19px] mt-[13px] gap-[11px]">`
-- **check:** `regex: \b(?:p|px|py|pt|pb|pl|pr|m|mx|my|mt|mb|ml|mr|gap|gap-x|gap-y|top|bottom|left|right)-\[\d+px\]\b -> fail if matches found`
+- **check:** `regex: (?:p|px|py|pt|pb|pl|pr|m|mx|my|mt|mb|ml|mr|gap|gap-x|gap-y|top|bottom|left|right)-\[\d+px\] -> fail if matches found`
 
 ### `NEXT-UI-106: No Fixed-Width Page Breakage`
 - **Statement**: Main container wrappers must use responsive fluid constraints (`max-w-* mx-auto w-full px-4`) instead of hardcoded pixel widths (`w-[1200px]`, `w-screen` without overflow safety).
 - **Pass/Fail Threshold**: Zero occurrences of fixed pixel widths >= 400px on layout wrappers.
 - **Violation Example**: `<div className="w-[1280px] flex flex-col">`
-- **check:** `regex: \bw-\[\d{3,4}px\]\b -> extract width -> fail if width >= 400 and !has_class(/max-w/)`
+- **check:** `regex: w-\[\d{3,4}px\] -> extract width -> fail if width >= 400 and !has_class(/max-w/)`
 
 ### `NEXT-UI-107: Max Reading Width Constraint`
 - **Statement**: Long-form text and blog/documentation articles must be constrained to a readable measure (`max-w-prose`, `max-w-2xl`, or `max-w-3xl`).
