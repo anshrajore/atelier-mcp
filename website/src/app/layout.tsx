@@ -26,7 +26,12 @@ export const metadata: Metadata = {
     "Post-generation UI/UX Critic and Backend Architecture Guard with gradeable rulesets, local fine-tuned MLX/GGUF models, and multi-agent IDE adapters.",
   authors: [{ name: "Ansh Rajore", url: "https://github.com/anshrajore" }],
   icons: {
-    icon: "/favicon.svg",
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.jpg", type: "image/jpeg" },
+    ],
+    shortcut: "/favicon.jpg",
+    apple: "/favicon.jpg",
   },
 };
 
