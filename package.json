@@ -2,12 +2,21 @@
   "name": "atelier",
   "version": "1.0.0",
   "description": "Two-agent post-generation quality gate (UI/UX Critic & Backend Architecture Guard) for vibe-coded apps",
+  "main": "mcp-server/dist/index.js",
+  "bin": {
+    "atelier": "./bin/atelier.js"
+  },
   "scripts": {
+    "start": "node bin/atelier.js serve",
+    "serve": "node bin/atelier.js serve",
+    "audit": "node bin/atelier.js audit",
+    "fix": "node bin/atelier.js fix",
+    "install-adapters": "node bin/atelier.js install all",
     "sync-adapters": "node scripts/sync-adapters.js",
     "check-sync": "node scripts/check-sync.js",
     "build": "cd mcp-server && npm run build",
-    "benchmark": "tsx benchmarks/runner.ts",
-    "test": "node scripts/check-sync.js"
+    "benchmark": "python3 model/eval/evaluate.py",
+    "test": "node scripts/verify-tools.js && node scripts/check-sync.js"
   },
   "keywords": [
     "atelier",
@@ -19,9 +28,10 @@
     "windsurf",
     "claude-code",
     "antigravity",
-    "mcp"
+    "mcp",
+    "vibe-coding"
   ],
-  "author": "Atelier Authors",
+  "author": "Ansh Rajore (https://github.com/anshrajore)",
   "license": "MIT",
   "devDependencies": {
     "tsx": "^4.19.0",
