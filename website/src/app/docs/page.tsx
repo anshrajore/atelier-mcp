@@ -124,7 +124,11 @@ export default function DocsPage() {
                 </div>
                 <pre className="text-gray-200 font-mono text-xs leading-relaxed overflow-x-auto">
                   <code>
-{`git clone https://github.com/anshrajore/atelier-mcp.git
+{`# 1-Liner: Install all editor adapters directly via npx
+npx -y github:anshrajore/atelier-mcp install
+
+# Or clone for full MCP server & local evaluation benchmarks:
+git clone https://github.com/anshrajore/atelier-mcp.git
 cd atelier-mcp
 ./setup.sh`}
                   </code>

@@ -7,7 +7,7 @@ import { ArrowRight, Terminal, Check, Copy, Sparkles } from "lucide-react";
 
 export const Hero = () => {
   const [copied, setCopied] = useState(false);
-  const installCmd = "npx -y atelier-quality-gate install";
+  const installCmd = "npx -y github:anshrajore/atelier-mcp install";
 
   const handleCopy = () => {
     navigator.clipboard.writeText(installCmd);

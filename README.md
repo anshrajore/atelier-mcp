@@ -110,7 +110,18 @@ Atelier provides single-command drop-in adapters for all leading agentic IDEs, w
 
 ## ⚡ Quickstart & Installation
 
-### 1. Clone & Build the MCP Server
+### Option A: One-Liner (Install Quality Gate Rules into any Project)
+
+Run anywhere in your project directory:
+
+```bash
+npx -y github:anshrajore/atelier-mcp install
+```
+*Installs `.cursorrules`, `.windsurfrules`, `CLAUDE.md`, `.github/copilot-instructions.md`, and `.agents/rules/atelier.md` in one command with zero setup.*
+
+---
+
+### Option B: Clone & Build the Local MCP Server
 
 ```bash
 git clone https://github.com/anshrajore/atelier-mcp.git
