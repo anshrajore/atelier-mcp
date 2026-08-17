@@ -7,12 +7,13 @@ import { LiveCritiqueDemo } from "../components/LiveCritiqueDemo";
 import { RulesetCoverage } from "../components/RulesetCoverage";
 import { BenchmarkScoreboard } from "../components/BenchmarkScoreboard";
 import { SupportedTools } from "../components/SupportedTools";
+import { AboutAnshRajore } from "../components/AboutAnshRajore";
 import { QuickstartSection } from "../components/QuickstartSection";
 import { Footer } from "../components/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#060a0f] text-white selection:bg-[#00e5ff] selection:text-[#060a0f]">
+    <main className="min-h-screen bg-white text-[#111827] selection:bg-[#ff6a00] selection:text-white">
       <Navbar />
       <Hero />
       <PositioningSection />
@@ -21,6 +22,7 @@ export default function Home() {
       <RulesetCoverage />
       <BenchmarkScoreboard />
       <SupportedTools />
+      <AboutAnshRajore />
       <QuickstartSection />
       <Footer />
     </main>

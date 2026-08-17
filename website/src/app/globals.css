@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --bg-aura-orange: #ff7a00;
-  --bg-aura-lavender: #c7d2fe;
+  --bg-aura-orange: #ff6a00;
+  --bg-aura-lavender: #c2d4f8;
 }
 
 body {
@@ -14,33 +14,54 @@ body {
   overflow-x: hidden;
 }
 
-/* Ambient Hero Aura (Matching Sarvam Reference) */
+/* Master Ambient Hero Aura (Exact Match to Sarvam Reference) */
 .hero-aura-background {
-  background: 
-    radial-gradient(ellipse 65% 55% at 50% -5%, rgba(255, 122, 0, 0.55) 0%, rgba(255, 160, 60, 0.32) 35%, rgba(199, 210, 254, 0.35) 60%, rgba(255, 255, 255, 0) 85%),
-    linear-gradient(180deg, #fbfcfe 0%, #ffffff 100%);
+  position: relative;
+  background: #ffffff;
 }
 
-.subtle-section-aura {
-  background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(255, 122, 0, 0.08) 0%, rgba(199, 210, 254, 0.12) 50%, transparent 80%);
+.hero-aura-background::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 640px;
+  background: 
+    radial-gradient(ellipse 45% 65% at 50% 0%, #ff6800 0%, #ff8b26 28%, rgba(255, 154, 60, 0.55) 45%, rgba(255, 180, 100, 0.18) 65%, transparent 80%),
+    radial-gradient(ellipse 80% 50% at 20% 15%, rgba(180, 205, 255, 0.6) 0%, rgba(210, 225, 255, 0.3) 40%, transparent 70%),
+    radial-gradient(ellipse 80% 50% at 80% 15%, rgba(180, 205, 255, 0.6) 0%, rgba(210, 225, 255, 0.3) 40%, transparent 70%),
+    linear-gradient(180deg, #fff7ed 0%, #fdfdfe 50%, #ffffff 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Subtle glow effects for cards */
+.subtle-card-glow {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.subtle-card-glow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(255, 106, 0, 0.12);
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 7px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f8fafc;
+  background: #ffffff;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #e2e8f0;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #cbd5e1;
 }
 
 /* Code typography */
