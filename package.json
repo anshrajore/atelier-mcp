@@ -14,7 +14,7 @@
     "install-adapters": "node bin/atelier.js install all",
     "sync-adapters": "node scripts/sync-adapters.js",
     "check-sync": "node scripts/check-sync.js",
-    "build": "cd mcp-server && npm run build",
+    "build": "cd mcp-server && npm install && npm run build",
     "benchmark": "python3 model/eval/evaluate.py",
     "test": "node scripts/verify-tools.js && node scripts/check-sync.js"
   },

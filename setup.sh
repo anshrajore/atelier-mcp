@@ -17,7 +17,8 @@ echo -e "${BOLD}================================================================
 
 echo -e "${DIM}[1/4] Building MCP Server TypeScript package...${RESET}"
 npm install --silent
-npm run build --silent
+npm --prefix mcp-server install --silent
+npm --prefix mcp-server run build --silent
 echo -e "  ${BOLD}✓${RESET} MCP Server compiled successfully (dist/index.js ready)\n"
 
 echo -e "${DIM}[2/4] Verifying canonical adapter synchronization...${RESET}"
