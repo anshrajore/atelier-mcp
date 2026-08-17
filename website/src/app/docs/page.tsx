@@ -125,7 +125,7 @@ export default function DocsPage() {
                 <pre className="text-gray-200 font-mono text-xs leading-relaxed overflow-x-auto">
                   <code>
 {`# 1-Liner: Install all editor adapters directly via npx
-npx -y github:anshrajore/atelier-mcp install
+npx -y atelier-quality-gate install
 
 # Or clone for full MCP server & local evaluation benchmarks:
 git clone https://github.com/anshrajore/atelier-mcp.git

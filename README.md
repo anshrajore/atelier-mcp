@@ -5,6 +5,7 @@
 <br />
 <br />
 
+[![npm version](https://img.shields.io/npm/v/atelier-quality-gate.svg?color=ff6a00)](https://www.npmjs.com/package/atelier-quality-gate)
 [![CI](https://github.com/anshrajore/atelier-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/anshrajore/atelier-mcp/actions/workflows/ci.yml)
 [![Live Website](https://img.shields.io/badge/Live_Website-atelier--quality--gate.vercel.app-ff6a00.svg)](https://atelier-quality-gate.vercel.app)
 [![License: MIT](https://img.shields.io/badge/License-MIT-ffffff.svg)](https://opensource.org/licenses/MIT)
@@ -16,6 +17,17 @@
   <em>Eliminates generic AI design clichés, uncalibrated UI layouts, and backend architectural flaws before code reaches production.</em><br />
   <strong><a href="https://atelier-quality-gate.vercel.app">🌐 Explore the Live Website (atelier-quality-gate.vercel.app) →</a></strong>
 </p>
+
+</div>
+
+---
+
+## ⚡ 1-Liner Quickstart (Install into Any Project)
+
+```bash
+npx -y atelier-quality-gate install
+```
+*Installs `.cursorrules`, `.windsurfrules`, `CLAUDE.md`, `.github/copilot-instructions.md`, and `.agents/rules/atelier.md` in 1 second with zero configuration.*
 
 </div>
 
