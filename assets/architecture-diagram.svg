@@ -1,119 +1,187 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" width="100%" height="100%">
   <defs>
-    <linearGradient id="archBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#080c10" />
-      <stop offset="50%" stop-color="#0c141a" />
-      <stop offset="100%" stop-color="#06090c" />
+    <linearGradient id="archBwBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#000000" />
+      <stop offset="50%" stop-color="#080808" />
+      <stop offset="100%" stop-color="#020202" />
     </linearGradient>
-    <linearGradient id="cyanPill" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#00e5ff" />
-      <stop offset="100%" stop-color="#0097a7" />
-    </linearGradient>
-    <pattern id="archGrid" width="30" height="30" patternUnits="userSpaceOnUse">
-      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#14212a" stroke-width="0.75" />
+    <pattern id="archGridBw" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#161616" stroke-width="0.75" />
     </pattern>
-    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1 L 8 5 L 0 9 z" fill="#00e5ff" />
+    <marker id="arrowWhite" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#ffffff" />
     </marker>
-    <marker id="arrowMuted" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1 L 8 5 L 0 9 z" fill="#546e7a" />
+    <marker id="arrowGray" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#555555" />
     </marker>
   </defs>
 
-  <!-- Container -->
-  <rect width="1200" height="480" rx="12" fill="url(#archBg)" stroke="#1a2b38" stroke-width="1.5" />
-  <rect width="1200" height="480" rx="12" fill="url(#archGrid)" opacity="0.6" />
+  <!-- Background -->
+  <rect width="1200" height="560" rx="14" fill="url(#archBwBg)" stroke="#222222" stroke-width="1.5" />
+  <rect width="1200" height="560" rx="14" fill="url(#archGridBw)" opacity="0.6" />
 
-  <!-- Title -->
-  <g transform="translate(60, 48)">
-    <text x="0" y="0" fill="#00e5ff" font-family="'Orbitron', sans-serif" font-size="20" font-weight="700" letter-spacing="1.5">ATELIER TWO-AGENT POST-GENERATION CRITIC PIPELINE</text>
-    <text x="0" y="24" fill="#78909c" font-family="'JetBrains Mono', monospace" font-size="12">Deterministic mechanical validation and distilled critic inference flow</text>
+  <!-- Outer Framing Accents -->
+  <path d="M 20 36 L 20 20 L 36 20" fill="none" stroke="#ffffff" stroke-width="1.5" />
+  <path d="M 1180 36 L 1180 20 L 1164 20" fill="none" stroke="#ffffff" stroke-width="1.5" />
+  <path d="M 20 524 L 20 540 L 36 540" fill="none" stroke="#ffffff" stroke-width="1.5" />
+  <path d="M 1180 524 L 1180 540 L 1164 540" fill="none" stroke="#ffffff" stroke-width="1.5" />
+
+  <!-- Top Title Header -->
+  <g transform="translate(60, 42)">
+    <text x="0" y="0" fill="#ffffff" font-family="'Orbitron', sans-serif" font-size="20" font-weight="800" letter-spacing="2">ATELIER TWO-AGENT QUALITY GATE ARCHITECTURE</text>
+    <text x="0" y="24" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="12">POST-GENERATION AUDIT PROTOCOL &amp; MECHANICAL VALIDATION PIPELINE</text>
+    
+    <!-- Developer Badge -->
+    <g transform="translate(760, -18)">
+      <rect width="320" height="26" rx="4" fill="#0c0c0c" stroke="#ffffff" stroke-width="1" />
+      <text x="12" y="17" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="10">DEVELOPED BY</text>
+      <text x="105" y="17" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="800" letter-spacing="1.5">ANSH RAJORE</text>
+      <circle cx="300" cy="13" r="3" fill="#ffffff" />
+    </g>
   </g>
 
-  <!-- Stage 1: Generation -->
-  <g transform="translate(60, 120)">
-    <rect width="220" height="280" rx="8" fill="#0c161e" stroke="#22394a" stroke-width="1.5" />
-    <rect x="16" y="16" width="188" height="28" rx="4" fill="#132430" />
-    <text x="110" y="35" fill="#90a4ae" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600" text-anchor="middle">1. GENERATION</text>
+  <line x1="60" y1="78" x2="1140" y2="78" stroke="#1f1f1f" stroke-width="1" />
+
+  <!-- ================= STAGE 1: VIBE GENERATION ================= -->
+  <g transform="translate(60, 105)">
+    <!-- Container -->
+    <rect width="210" height="400" rx="8" fill="#080808" stroke="#333333" stroke-width="1.5" />
     
-    <text x="20" y="76" fill="#cfd8dc" font-family="'Orbitron', sans-serif" font-size="14" font-weight="600">Vibe-Coding IDE</text>
-    <text x="20" y="98" fill="#546e7a" font-family="'JetBrains Mono', monospace" font-size="11">Cursor / Windsurf /</text>
-    <text x="20" y="116" fill="#546e7a" font-family="'JetBrains Mono', monospace" font-size="11">Claude / Copilot / AGY</text>
+    <!-- Stage Pill -->
+    <rect x="14" y="14" width="182" height="26" rx="4" fill="#141414" stroke="#444444" stroke-width="1" />
+    <text x="105" y="31" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">01 // CODE GENERATION</text>
+
+    <!-- Content -->
+    <text x="16" y="68" fill="#ffffff" font-family="'Orbitron', sans-serif" font-size="13" font-weight="700">Coding Client</text>
+    <text x="16" y="88" fill="#777777" font-family="'JetBrains Mono', monospace" font-size="11">Cursor / Windsurf</text>
+    <text x="16" y="104" fill="#777777" font-family="'JetBrains Mono', monospace" font-size="11">Claude Code / Copilot</text>
+    <text x="16" y="120" fill="#777777" font-family="'JetBrains Mono', monospace" font-size="11">Antigravity / OpenCode</text>
 
     <!-- Raw Output Block -->
-    <rect x="16" y="140" width="188" height="110" rx="6" fill="#070c10" stroke="#1c303f" stroke-width="1" />
-    <text x="28" y="164" fill="#00e5ff" font-family="'JetBrains Mono', monospace" font-size="10">RAW_GENERATION</text>
-    <text x="28" y="186" fill="#ef5350" font-family="'JetBrains Mono', monospace" font-size="10">• Arbitrary Tailwind</text>
-    <text x="28" y="204" fill="#ef5350" font-family="'JetBrains Mono', monospace" font-size="10">• Unsanitized Errors</text>
-    <text x="28" y="222" fill="#ef5350" font-family="'JetBrains Mono', monospace" font-size="10">• Hardcoded Secrets</text>
-    <text x="28" y="240" fill="#ef5350" font-family="'JetBrains Mono', monospace" font-size="10">• Orphan Branching</text>
+    <rect x="14" y="140" width="182" height="236" rx="6" fill="#030303" stroke="#222222" stroke-width="1" />
+    <rect x="14" y="140" width="182" height="22" rx="4" fill="#111111" />
+    <text x="24" y="155" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700">RAW_AGENT_EMISSION</text>
+    
+    <text x="24" y="182" fill="#aaaaaa" font-family="'JetBrains Mono', monospace" font-size="10">• Arbitrary Spacing</text>
+    <text x="24" y="200" fill="#aaaaaa" font-family="'JetBrains Mono', monospace" font-size="10">• Purple Gradient Glow</text>
+    <text x="24" y="218" fill="#aaaaaa" font-family="'JetBrains Mono', monospace" font-size="10">• Hardcoded JWTs</text>
+    <text x="24" y="236" fill="#aaaaaa" font-family="'JetBrains Mono', monospace" font-size="10">• Unsanitized Dumps</text>
+    <text x="24" y="254" fill="#aaaaaa" font-family="'JetBrains Mono', monospace" font-size="10">• Orphan Workflow Paths</text>
+    <text x="24" y="272" fill="#aaaaaa" font-family="'JetBrains Mono', monospace" font-size="10">• Unvalidated Inputs</text>
+
+    <line x1="24" y1="290" x2="186" y2="290" stroke="#1f1f1f" stroke-width="1" />
+    <text x="24" y="310" fill="#666666" font-family="'JetBrains Mono', monospace" font-size="9">STATUS: UNCHECKED</text>
+    <text x="24" y="328" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="9">FAILING 80% CHECKS</text>
   </g>
 
-  <!-- Flow Arrow 1 -> 2 -->
-  <line x1="280" y1="260" x2="340" y2="260" stroke="#00e5ff" stroke-width="2" marker-end="url(#arrow)" />
+  <!-- Flow Vector: Stage 1 -> Stage 2 -->
+  <line x1="270" y1="305" x2="330" y2="305" stroke="#ffffff" stroke-width="2" marker-end="url(#arrowWhite)" />
 
-  <!-- Stage 2: Atelier Critic Gate (Center Container) -->
-  <g transform="translate(350, 100)">
-    <rect width="480" height="320" rx="10" fill="#081016" stroke="#00e5ff" stroke-width="1.5" stroke-dasharray="4 2" />
-    <rect x="20" y="16" width="440" height="28" rx="4" fill="#00e5ff" fill-opacity="0.1" stroke="#00e5ff" stroke-width="1" />
-    <text x="240" y="35" fill="#00e5ff" font-family="'Orbitron', sans-serif" font-size="12" font-weight="700" text-anchor="middle" letter-spacing="1">ATELIER QUALITY GATE (MCP SERVER)</text>
+  <!-- ================= STAGE 2: ATELIER MCP QUALITY GATE ================= -->
+  <g transform="translate(340, 95)">
+    <!-- Main Outer Container -->
+    <rect width="520" height="420" rx="10" fill="#040404" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="4 2" />
+    
+    <!-- Top System Header -->
+    <rect x="16" y="14" width="488" height="28" rx="4" fill="#111111" stroke="#333333" stroke-width="1" />
+    <text x="260" y="33" fill="#ffffff" font-family="'Orbitron', sans-serif" font-size="12" font-weight="800" text-anchor="middle" letter-spacing="1.5">02 // ATELIER QUALITY GATE (MCP SERVER)</text>
 
-    <!-- UI/UX Critic Sub-box -->
-    <g transform="translate(24, 60)">
-      <rect width="206" height="236" rx="6" fill="#0c1720" stroke="#1c303f" stroke-width="1.5" />
-      <text x="16" y="26" fill="#00e5ff" font-family="'Orbitron', sans-serif" font-size="12" font-weight="600">UI/UX Critic</text>
-      <text x="16" y="44" fill="#78909c" font-family="'JetBrains Mono', monospace" font-size="10">Visual &amp; Token Inspector</text>
-      
-      <rect x="16" y="56" width="174" height="1" fill="#1c303f" />
-      <text x="16" y="78" fill="#cfd8dc" font-family="'JetBrains Mono', monospace" font-size="10">✓ 8px Spacing Matrix</text>
-      <text x="16" y="98" fill="#cfd8dc" font-family="'JetBrains Mono', monospace" font-size="10">✓ Typography Scale</text>
-      <text x="16" y="118" fill="#cfd8dc" font-family="'JetBrains Mono', monospace" font-size="10">✓ WCAG AA Contrast</text>
-      <text x="16" y="138" fill="#cfd8dc" font-family="'JetBrains Mono', monospace" font-size="10">✓ Single Focal Hierarchy</text>
-      <text x="16" y="158" fill="#cfd8dc" font-family="'JetBrains Mono', monospace" font-size="10">✓ Decorative Ceilings</text>
+    <!-- Critic A: UI/UX Critic -->
+    <g transform="translate(20, 56)">
+      <rect width="230" height="344" rx="6" fill="#0a0a0a" stroke="#333333" stroke-width="1.5" />
+      <rect width="230" height="26" rx="6" fill="#161616" />
+      <text x="14" y="18" fill="#ffffff" font-family="'Orbitron', sans-serif" font-size="11" font-weight="700">UI/UX CRITIC</text>
+      <circle cx="210" cy="13" r="3" fill="#ffffff" />
 
-      <rect x="16" y="174" width="174" height="48" rx="4" fill="#060c10" stroke="#00e5ff" stroke-width="0.75" />
-      <text x="24" y="192" fill="#00e5ff" font-family="'JetBrains Mono', monospace" font-size="9">CHECK: regex/AST tokens</text>
-      <text x="24" y="208" fill="#90a4ae" font-family="'JetBrains Mono', monospace" font-size="9">Tool: critique_ui</text>
+      <text x="14" y="44" fill="#777777" font-family="'JetBrains Mono', monospace" font-size="9">Tool: critique_ui</text>
+
+      <line x1="14" y1="52" x2="216" y2="52" stroke="#222222" stroke-width="1" />
+
+      <text x="14" y="74" fill="#e0e0e0" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="600">MECHANICAL CHECKS:</text>
+      <text x="14" y="96" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="9">[BASE-UI-101] 8px Grid Spacing</text>
+      <text x="14" y="114" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="9">[BASE-UI-102] Type Scale Floor</text>
+      <text x="14" y="132" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="9">[BASE-UI-103] WCAG AA Contrast</text>
+      <text x="14" y="150" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="9">[BASE-UI-104] Single Focal Point</text>
+      <text x="14" y="168" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="9">[BASE-UI-105] Dec. Cap (≤2 / view)</text>
+      <text x="14" y="186" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="9">[NEXT-UI-101] Tailw. Arbitrary</text>
+      <text x="14" y="204" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="9">[NEXT-UI-105] Focus-Visible Ring</text>
+
+      <!-- Engine Pill -->
+      <rect x="14" y="226" width="202" height="98" rx="4" fill="#000000" stroke="#222222" stroke-width="1" />
+      <text x="24" y="246" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700">INSPECTION ENGINE</text>
+      <text x="24" y="264" fill="#666666" font-family="'JetBrains Mono', monospace" font-size="9">• Regex AST Class Parser</text>
+      <text x="24" y="280" fill="#666666" font-family="'JetBrains Mono', monospace" font-size="9">• Contrast Ratio Engine</text>
+      <text x="24" y="296" fill="#666666" font-family="'JetBrains Mono', monospace" font-size="9">• Layout Shift Predictor</text>
+      <text x="24" y="312" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="9">Pass Threshold: 100%</text>
     </g>
 
-    <!-- Backend Guard Sub-box -->
-    <g transform="translate(250, 60)">
-      <rect width="206" height="236" rx="6" fill="#0c1720" stroke="#1c303f" stroke-width="1.5" />
-      <text x="16" y="26" fill="#00b4d8" font-family="'Orbitron', sans-serif" font-size="12" font-weight="600">Backend Guard</text>
-      <text x="16" y="44" fill="#78909c" font-family="'JetBrains Mono', monospace" font-size="10">Soundness &amp; Schema Guard</text>
+    <!-- Critic B: Backend Guard -->
+    <g transform="translate(270, 56)">
+      <rect width="230" height="344" rx="6" fill="#0a0a0a" stroke="#333333" stroke-width="1.5" />
+      <rect width="230" height="26" rx="6" fill="#161616" />
+      <text x="14" y="18" fill="#ffffff" font-family="'Orbitron', sans-serif" font-size="11" font-weight="700">BACKEND GUARD</text>
+      <circle cx="210" cy="13" r="3" fill="#ffffff" />
 
-      <rect x="16" y="56" width="174" height="1" fill="#1c303f" />
-      <text x="16" y="78" fill="#cfd8dc" font-family="'JetBrains Mono', monospace" font-size="10">✓ Secrets Leak Defense</text>
-      <text x="16" y="98" fill="#cfd8dc" font-family="'JetBrains Mono', monospace" font-size="10">✓ Input Boundary (Zod)</text>
-      <text x="16" y="118" fill="#cfd8dc" font-family="'JetBrains Mono', monospace" font-size="10">✓ Sanitized Error Dumps</text>
-      <text x="16" y="138" fill="#cfd8dc" font-family="'JetBrains Mono', monospace" font-size="10">✓ No Orphan Fallbacks</text>
-      <text x="16" y="158" fill="#cfd8dc" font-family="'JetBrains Mono', monospace" font-size="10">✓ Timeout/Rate Limit Dflt</text>
+      <text x="14" y="44" fill="#777777" font-family="'JetBrains Mono', monospace" font-size="9">Tool: critique_backend</text>
 
-      <rect x="16" y="174" width="174" height="48" rx="4" fill="#060c10" stroke="#00b4d8" stroke-width="0.75" />
-      <text x="24" y="192" fill="#00b4d8" font-family="'JetBrains Mono', monospace" font-size="9">CHECK: JSON/AST schema</text>
-      <text x="24" y="208" fill="#90a4ae" font-family="'JetBrains Mono', monospace" font-size="9">Tool: critique_backend</text>
+      <line x1="14" y1="52" x2="216" y2="52" stroke="#222222" stroke-width="1" />
+
+      <text x="14" y="74" fill="#e0e0e0" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="600">MECHANICAL CHECKS:</text>
+      <text x="14" y="96" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="9">[BASE-BE-101] Secrets Leakage</text>
+      <text x="14" y="114" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="9">[BASE-BE-102] Schema Validation</text>
+      <text x="14" y="132" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="9">[BASE-BE-103] Error Sanitization</text>
+      <text x="14" y="150" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="9">[BASE-BE-104] Orphan Paths</text>
+      <text x="14" y="168" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="9">[BASE-BE-105] Rate Limit / Timeouts</text>
+      <text x="14" y="186" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="9">[N8N-BE-101] Node Schema JSON</text>
+      <text x="14" y="204" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="9">[N8N-BE-105] Error Trigger Node</text>
+
+      <!-- Engine Pill -->
+      <rect x="14" y="226" width="202" height="98" rx="4" fill="#000000" stroke="#222222" stroke-width="1" />
+      <text x="24" y="246" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700">INSPECTION ENGINE</text>
+      <text x="24" y="264" fill="#666666" font-family="'JetBrains Mono', monospace" font-size="9">• AST Vulnerability Scan</text>
+      <text x="24" y="280" fill="#666666" font-family="'JetBrains Mono', monospace" font-size="9">• Graph Topology Checker</text>
+      <text x="24" y="296" fill="#666666" font-family="'JetBrains Mono', monospace" font-size="9">• Boundary Guard Check</text>
+      <text x="24" y="312" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="9">Pass Threshold: 100%</text>
     </g>
   </g>
 
-  <!-- Flow Arrow 2 -> 3 -->
-  <line x1="830" y1="260" x2="890" y2="260" stroke="#00e5ff" stroke-width="2" marker-end="url(#arrow)" />
+  <!-- Flow Vector: Stage 2 -> Stage 3 -->
+  <line x1="860" y1="305" x2="920" y2="305" stroke="#ffffff" stroke-width="2" marker-end="url(#arrowWhite)" />
 
-  <!-- Stage 3: Output & Repair -->
-  <g transform="translate(900, 120)">
-    <rect width="240" height="280" rx="8" fill="#0c161e" stroke="#22394a" stroke-width="1.5" />
-    <rect x="16" y="16" width="208" height="28" rx="4" fill="#132430" />
-    <text x="120" y="35" fill="#90a4ae" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600" text-anchor="middle">3. VERIFIED PATCH</text>
+  <!-- ================= STAGE 3: VERIFIED DIFF OUTPUT ================= -->
+  <g transform="translate(930, 105)">
+    <!-- Container -->
+    <rect width="210" height="400" rx="8" fill="#080808" stroke="#ffffff" stroke-width="1.5" />
 
-    <text x="20" y="76" fill="#26a69a" font-family="'Orbitron', sans-serif" font-size="14" font-weight="600">Production Code</text>
-    <text x="20" y="98" fill="#78909c" font-family="'JetBrains Mono', monospace" font-size="11">Automated diff generation</text>
-    <text x="20" y="116" fill="#78909c" font-family="'JetBrains Mono', monospace" font-size="11">&amp; mechanical pass receipt</text>
+    <!-- Stage Pill -->
+    <rect x="14" y="14" width="182" height="26" rx="4" fill="#1c1c1c" stroke="#ffffff" stroke-width="1" />
+    <text x="105" y="31" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">03 // VERIFIED EMISSION</text>
 
-    <!-- Clean Output Block -->
-    <rect x="16" y="140" width="208" height="110" rx="6" fill="#070c10" stroke="#1c303f" stroke-width="1" />
-    <text x="28" y="164" fill="#26a69a" font-family="'JetBrains Mono', monospace" font-size="10">STRUCTURED_OUTPUT</text>
-    <text x="28" y="186" fill="#cfd8dc" font-family="'JetBrains Mono', monospace" font-size="10">• Precise Rule Citations</text>
-    <text x="28" y="204" fill="#cfd8dc" font-family="'JetBrains Mono', monospace" font-size="10">• Line-by-Line Diffs</text>
-    <text x="28" y="222" fill="#cfd8dc" font-family="'JetBrains Mono', monospace" font-size="10">• Zero-Cost Local Inference</text>
-    <text x="28" y="240" fill="#26a69a" font-family="'JetBrains Mono', monospace" font-size="10">• 100% Deterministic Pass</text>
+    <!-- Content -->
+    <text x="16" y="68" fill="#ffffff" font-family="'Orbitron', sans-serif" font-size="13" font-weight="700">Production Code</text>
+    <text x="16" y="88" fill="#777777" font-family="'JetBrains Mono', monospace" font-size="11">Clean, Scaled,</text>
+    <text x="16" y="104" fill="#777777" font-family="'JetBrains Mono', monospace" font-size="11">Audited &amp; Sound</text>
+
+    <!-- Verified Output Block -->
+    <rect x="14" y="140" width="182" height="236" rx="6" fill="#000000" stroke="#333333" stroke-width="1" />
+    <rect x="14" y="140" width="182" height="22" rx="4" fill="#ffffff" />
+    <text x="24" y="155" fill="#000000" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="800">STRUCTURED_DIFF</text>
+
+    <text x="24" y="182" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="10">✓ Concrete Patches</text>
+    <text x="24" y="200" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="10">✓ Precise Citations</text>
+    <text x="24" y="218" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="10">✓ Zero-Cost Local</text>
+    <text x="24" y="236" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="10">✓ Line-Level Diffs</text>
+    <text x="24" y="254" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="10">✓ OWASP Compliant</text>
+    <text x="24" y="272" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="10">✓ 8pt Harmonized</text>
+
+    <line x1="24" y1="290" x2="186" y2="290" stroke="#222222" stroke-width="1" />
+    <text x="24" y="310" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="9">SCORE: 100/100</text>
+    <text x="24" y="328" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="9">VERIFIED OK // 12ms</text>
+  </g>
+
+  <!-- Bottom Blueprint Stamp -->
+  <g transform="translate(60, 528)">
+    <text x="0" y="12" fill="#444444" font-family="'JetBrains Mono', monospace" font-size="10">SYSTEM DESIGN SPECIFICATION // MODEL: ATELIER-7B-DISTILLED // RUNTIME: MCP-STDIO</text>
+    <text x="890" y="12" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="10">DEVELOPED BY ANSH RAJORE</text>
   </g>
 </svg>

@@ -1,112 +1,155 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480" width="100%" height="100%">
   <defs>
-    <linearGradient id="scoreBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#080c10" />
-      <stop offset="50%" stop-color="#0d161e" />
-      <stop offset="100%" stop-color="#06090c" />
+    <linearGradient id="scoreBwBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#000000" />
+      <stop offset="50%" stop-color="#080808" />
+      <stop offset="100%" stop-color="#020202" />
     </linearGradient>
-    <linearGradient id="cyanBar" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#00e5ff" />
-      <stop offset="100%" stop-color="#00838f" />
-    </linearGradient>
-    <linearGradient id="teacherBar" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#00b4d8" />
-      <stop offset="100%" stop-color="#0077b6" />
-    </linearGradient>
-    <pattern id="scoreGrid" width="30" height="30" patternUnits="userSpaceOnUse">
-      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#152430" stroke-width="0.75" />
+    <pattern id="scoreBwGrid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#151515" stroke-width="0.75" />
     </pattern>
+    <linearGradient id="whiteBarGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#cccccc" />
+    </linearGradient>
+    <linearGradient id="silverBarGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#888888" />
+      <stop offset="100%" stop-color="#555555" />
+    </linearGradient>
   </defs>
 
   <!-- Background -->
-  <rect width="1200" height="420" rx="12" fill="url(#scoreBg)" stroke="#1a2b38" stroke-width="1.5" />
-  <rect width="1200" height="420" rx="12" fill="url(#scoreGrid)" opacity="0.6" />
+  <rect width="1200" height="480" rx="14" fill="url(#scoreBwBg)" stroke="#222222" stroke-width="1.5" />
+  <rect width="1200" height="480" rx="14" fill="url(#scoreBwGrid)" opacity="0.6" />
 
-  <!-- Title Section -->
-  <g transform="translate(60, 48)">
-    <text x="0" y="0" fill="#00e5ff" font-family="'Orbitron', sans-serif" font-size="18" font-weight="700" letter-spacing="1.5">BENCHMARK RECALL SCOREBOARD</text>
-    <text x="0" y="24" fill="#78909c" font-family="'JetBrains Mono', monospace" font-size="12">Post-generation quality violation detection against mechanical ground truth checks</text>
+  <!-- Corner Accents -->
+  <path d="M 18 32 L 18 18 L 32 18" fill="none" stroke="#ffffff" stroke-width="1.5" />
+  <path d="M 1182 32 L 1182 18 L 1168 18" fill="none" stroke="#ffffff" stroke-width="1.5" />
+  <path d="M 18 448 L 18 462 L 32 462" fill="none" stroke="#ffffff" stroke-width="1.5" />
+  <path d="M 1182 448 L 1182 462 L 1168 462" fill="none" stroke="#ffffff" stroke-width="1.5" />
+
+  <!-- Top Title Header -->
+  <g transform="translate(60, 42)">
+    <text x="0" y="0" fill="#ffffff" font-family="'Orbitron', sans-serif" font-size="20" font-weight="800" letter-spacing="2">BENCHMARK RECALL SCOREBOARD</text>
+    <text x="0" y="24" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="12">POST-GENERATION QUALITY CRITIQUE VS. MECHANICAL GROUND TRUTH CHECKS</text>
+    
+    <!-- Developer Badge -->
+    <g transform="translate(760, -18)">
+      <rect width="320" height="26" rx="4" fill="#0c0c0c" stroke="#ffffff" stroke-width="1" />
+      <text x="12" y="17" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="10">DEVELOPED BY</text>
+      <text x="105" y="17" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="800" letter-spacing="1.5">ANSH RAJORE</text>
+      <circle cx="300" cy="13" r="3" fill="#ffffff" />
+    </g>
   </g>
 
-  <!-- Score Chart Rows -->
-  <g transform="translate(60, 110)">
+  <line x1="60" y1="78" x2="1140" y2="78" stroke="#1f1f1f" stroke-width="1" />
+
+  <!-- Table Header Columns -->
+  <g transform="translate(60, 105)">
+    <text x="0" y="0" fill="#666666" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700">ARCHITECTURE / MODEL</text>
+    <text x="290" y="0" fill="#666666" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700">CRITIC MODE</text>
+    <text x="470" y="0" fill="#666666" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700">OVERALL RECALL BENCHMARK</text>
+    <text x="960" y="0" fill="#666666" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700">PRECISION</text>
+    <text x="1045" y="0" fill="#666666" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700">LATENCY</text>
+  </g>
+
+  <!-- Benchmark Rows -->
+  <g transform="translate(60, 125)">
     
-    <!-- Row 1: Vanilla AI Agent -->
+    <!-- Row 1: Vanilla Agent -->
     <g transform="translate(0, 0)">
-      <text x="0" y="22" fill="#cfd8dc" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="600">Vanilla Agent (GPT-4o/Sonnet)</text>
-      <text x="320" y="22" fill="#546e7a" font-family="'JetBrains Mono', monospace" font-size="11">No Critic Gate</text>
-      
+      <rect width="1080" height="48" rx="6" fill="#060606" stroke="#181818" stroke-width="1" />
+      <text x="16" y="29" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="12">Vanilla Agent (GPT-4o/Sonnet)</text>
+      <text x="290" y="29" fill="#555555" font-family="'JetBrains Mono', monospace" font-size="11">No Critic Gate</text>
+
       <!-- Track -->
-      <rect x="460" y="6" width="500" height="24" rx="4" fill="#0b131a" stroke="#162530" stroke-width="1" />
-      <!-- Bar: 0% -->
-      <rect x="460" y="6" width="2" height="24" rx="4" fill="#37474f" />
-      <text x="980" y="23" fill="#546e7a" font-family="'Orbitron', sans-serif" font-size="13" font-weight="700">0.0%</text>
-      <text x="1050" y="23" fill="#546e7a" font-family="'JetBrains Mono', monospace" font-size="11">N/A</text>
+      <rect x="470" y="14" width="460" height="20" rx="3" fill="#000000" stroke="#1f1f1f" stroke-width="1" />
+      <rect x="470" y="14" width="2" height="20" rx="3" fill="#333333" />
+      <text x="890" y="29" fill="#555555" font-family="'Orbitron', sans-serif" font-size="12" font-weight="700">0.0%</text>
+
+      <text x="960" y="29" fill="#555555" font-family="'JetBrains Mono', monospace" font-size="11">N/A</text>
+      <text x="1045" y="29" fill="#555555" font-family="'JetBrains Mono', monospace" font-size="11">N/A</text>
     </g>
 
     <!-- Row 2: Ponytail -->
-    <g transform="translate(0, 52)">
-      <text x="0" y="22" fill="#cfd8dc" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="600">Ponytail (Pre-Prompt Only)</text>
-      <text x="320" y="22" fill="#78909c" font-family="'JetBrains Mono', monospace" font-size="11">Minimalism rules</text>
+    <g transform="translate(0, 56)">
+      <rect width="1080" height="48" rx="6" fill="#060606" stroke="#181818" stroke-width="1" />
+      <text x="16" y="29" fill="#aaaaaa" font-family="'JetBrains Mono', monospace" font-size="12">Ponytail (Pre-Prompt Only)</text>
+      <text x="290" y="29" fill="#777777" font-family="'JetBrains Mono', monospace" font-size="11">Minimalism Rules</text>
 
       <!-- Track -->
-      <rect x="460" y="6" width="500" height="24" rx="4" fill="#0b131a" stroke="#162530" stroke-width="1" />
-      <!-- Bar: 15.4% -> 500 * 0.154 = 77px -->
-      <rect x="460" y="6" width="77" height="24" rx="4" fill="#546e7a" />
-      <text x="980" y="23" fill="#90a4ae" font-family="'Orbitron', sans-serif" font-size="13" font-weight="700">15.4%</text>
-      <text x="1050" y="23" fill="#78909c" font-family="'JetBrains Mono', monospace" font-size="11">66.7% Prec</text>
+      <rect x="470" y="14" width="460" height="20" rx="3" fill="#000000" stroke="#1f1f1f" stroke-width="1" />
+      <!-- Bar: 15.4% -> 460 * 0.154 = 70.8px -->
+      <rect x="470" y="14" width="70.8" height="20" rx="3" fill="#555555" />
+      <text x="890" y="29" fill="#888888" font-family="'Orbitron', sans-serif" font-size="12" font-weight="700">15.4%</text>
+
+      <text x="960" y="29" fill="#777777" font-family="'JetBrains Mono', monospace" font-size="11">66.7%</text>
+      <text x="1045" y="29" fill="#777777" font-family="'JetBrains Mono', monospace" font-size="11">N/A</text>
     </g>
 
-    <!-- Row 3: Atelier Distilled Fine-Tuned (Highlight) -->
-    <g transform="translate(0, 104)">
-      <!-- Highlight pill outline -->
-      <rect x="-10" y="-4" width="1090" height="44" rx="6" fill="#00e5ff" fill-opacity="0.04" stroke="#00e5ff" stroke-width="1" />
+    <!-- Row 3: Atelier Fine-Tuned Local 7B (Primary Hero) -->
+    <g transform="translate(0, 112)">
+      <rect width="1080" height="52" rx="6" fill="#0e0e0e" stroke="#ffffff" stroke-width="1.5" />
+      <circle cx="6" cy="26" r="3" fill="#ffffff" />
       
-      <text x="0" y="24" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700">Atelier Fine-Tuned (Qwen-7B)</text>
-      <text x="320" y="24" fill="#00e5ff" font-family="'JetBrains Mono', monospace" font-size="11">Local GGUF (0 USD)</text>
+      <text x="16" y="32" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="800">Atelier Fine-Tuned (Qwen-7B)</text>
+      <text x="290" y="32" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600">Local GGUF (0 USD)</text>
 
       <!-- Track -->
-      <rect x="460" y="6" width="500" height="24" rx="4" fill="#0b131a" stroke="#162530" stroke-width="1" />
-      <!-- Bar: 92.1% -> 500 * 0.921 = 460px -->
-      <rect x="460" y="6" width="460.5" height="24" rx="4" fill="url(#cyanBar)" />
-      <text x="980" y="24" fill="#00e5ff" font-family="'Orbitron', sans-serif" font-size="14" font-weight="800">92.1%</text>
-      <text x="1050" y="24" fill="#00e5ff" font-family="'JetBrains Mono', monospace" font-size="11">93.5% Prec</text>
+      <rect x="470" y="15" width="460" height="22" rx="3" fill="#000000" stroke="#333333" stroke-width="1" />
+      <!-- Bar: 92.1% -> 460 * 0.921 = 423.6px -->
+      <rect x="470" y="15" width="423.6" height="22" rx="3" fill="url(#whiteBarGrad)" />
+      <text x="890" y="32" fill="#ffffff" font-family="'Orbitron', sans-serif" font-size="13" font-weight="800">92.1%</text>
+
+      <text x="960" y="32" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700">93.5%</text>
+      <text x="1045" y="32" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700">180ms</text>
     </g>
 
     <!-- Row 4: Atelier Frontier Teacher -->
-    <g transform="translate(0, 156)">
-      <text x="0" y="22" fill="#cfd8dc" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="600">Atelier Frontier (Sonnet 3.5)</text>
-      <text x="320" y="22" fill="#78909c" font-family="'JetBrains Mono', monospace" font-size="11">Cloud API ($14.20/1k)</text>
+    <g transform="translate(0, 172)">
+      <rect width="1080" height="48" rx="6" fill="#060606" stroke="#181818" stroke-width="1" />
+      <text x="16" y="29" fill="#cccccc" font-family="'JetBrains Mono', monospace" font-size="12">Atelier Frontier (Sonnet 3.5)</text>
+      <text x="290" y="29" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="11">Cloud API ($14.20/1k)</text>
 
       <!-- Track -->
-      <rect x="460" y="6" width="500" height="24" rx="4" fill="#0b131a" stroke="#162530" stroke-width="1" />
-      <!-- Bar: 95.7% -> 500 * 0.957 = 478.5px -->
-      <rect x="460" y="6" width="478.5" height="24" rx="4" fill="url(#teacherBar)" />
-      <text x="980" y="23" fill="#00b4d8" font-family="'Orbitron', sans-serif" font-size="13" font-weight="700">95.7%</text>
-      <text x="1050" y="23" fill="#78909c" font-family="'JetBrains Mono', monospace" font-size="11">94.8% Prec</text>
+      <rect x="470" y="14" width="460" height="20" rx="3" fill="#000000" stroke="#1f1f1f" stroke-width="1" />
+      <!-- Bar: 95.7% -> 460 * 0.957 = 440.2px -->
+      <rect x="470" y="14" width="440.2" height="20" rx="3" fill="url(#silverBarGrad)" />
+      <text x="890" y="29" fill="#cccccc" font-family="'Orbitron', sans-serif" font-size="12" font-weight="700">95.7%</text>
+
+      <text x="960" y="29" fill="#aaaaaa" font-family="'JetBrains Mono', monospace" font-size="11">94.8%</text>
+      <text x="1045" y="29" fill="#aaaaaa" font-family="'JetBrains Mono', monospace" font-size="11">1,450ms</text>
     </g>
 
     <!-- Row 5: Atelier Heuristics Engine -->
-    <g transform="translate(0, 208)">
-      <text x="0" y="22" fill="#cfd8dc" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="600">Atelier Heuristic Engine</text>
-      <text x="320" y="22" fill="#78909c" font-family="'JetBrains Mono', monospace" font-size="11">Zero-Dep Static (12ms)</text>
+    <g transform="translate(0, 228)">
+      <rect width="1080" height="48" rx="6" fill="#060606" stroke="#181818" stroke-width="1" />
+      <text x="16" y="29" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700">Atelier Heuristic Engine</text>
+      <text x="290" y="29" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="11">Zero-Dep Static (0 USD)</text>
 
       <!-- Track -->
-      <rect x="460" y="6" width="500" height="24" rx="4" fill="#0b131a" stroke="#162530" stroke-width="1" />
-      <!-- Bar: 100.0% -> 500px -->
-      <rect x="460" y="6" width="500" height="24" rx="4" fill="#00838f" />
-      <text x="980" y="23" fill="#26a69a" font-family="'Orbitron', sans-serif" font-size="13" font-weight="700">100.0%</text>
-      <text x="1050" y="23" fill="#78909c" font-family="'JetBrains Mono', monospace" font-size="11">81.8% Prec</text>
-    </g>
+      <rect x="470" y="14" width="460" height="20" rx="3" fill="#000000" stroke="#1f1f1f" stroke-width="1" />
+      <!-- Bar: 100.0% -> 460px -->
+      <rect x="470" y="14" width="460" height="20" rx="3" fill="#ffffff" />
+      <text x="890" y="29" fill="#ffffff" font-family="'Orbitron', sans-serif" font-size="12" font-weight="800">100.0%</text>
 
+      <text x="960" y="29" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="11">81.8%</text>
+      <text x="1045" y="29" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="11">12ms</text>
+    </g>
   </g>
 
-  <!-- Metric Labels Footer -->
-  <g transform="translate(520, 385)">
-    <text x="0" y="0" fill="#546e7a" font-family="'JetBrains Mono', monospace" font-size="10">0%</text>
-    <text x="125" y="0" fill="#546e7a" font-family="'JetBrains Mono', monospace" font-size="10">25%</text>
-    <text x="250" y="0" fill="#546e7a" font-family="'JetBrains Mono', monospace" font-size="10">50%</text>
-    <text x="375" y="0" fill="#546e7a" font-family="'JetBrains Mono', monospace" font-size="10">75%</text>
-    <text x="490" y="0" fill="#546e7a" font-family="'JetBrains Mono', monospace" font-size="10">100%</text>
+  <!-- Scale Footer -->
+  <g transform="translate(530, 424)">
+    <text x="0" y="0" fill="#444444" font-family="'JetBrains Mono', monospace" font-size="10">0%</text>
+    <text x="115" y="0" fill="#444444" font-family="'JetBrains Mono', monospace" font-size="10">25%</text>
+    <text x="230" y="0" fill="#444444" font-family="'JetBrains Mono', monospace" font-size="10">50%</text>
+    <text x="345" y="0" fill="#444444" font-family="'JetBrains Mono', monospace" font-size="10">75%</text>
+    <text x="445" y="0" fill="#444444" font-family="'JetBrains Mono', monospace" font-size="10">100%</text>
+  </g>
+
+  <!-- Bottom Details Stamp -->
+  <g transform="translate(60, 452)">
+    <text x="0" y="12" fill="#444444" font-family="'JetBrains Mono', monospace" font-size="10">BENCHMARK TEST SUITE: 36 GRADEABLE RULES // EVALUATED AUGUST 2026</text>
+    <text x="890" y="12" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="10">DEVELOPED BY ANSH RAJORE</text>
   </g>
 </svg>
