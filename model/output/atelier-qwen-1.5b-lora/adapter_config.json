@@ -1,0 +1,18 @@
+{
+  "adapter_path": "model/output/atelier-qwen-1.5b-lora",
+  "batch_size": 2,
+  "iters": 100,
+  "learning_rate": 1e-05,
+  "model": "mlx-community/Qwen2.5-1.5B-Instruct-4bit",
+  "num_layers": 8,
+  "lora_parameters": {
+    "rank": 8,
+    "alpha": 16,
+    "dropout": 0.0,
+    "scale": 10.0
+  },
+  "fine_tune_type": "lora",
+  "first_loss": 2.4027864933013916,
+  "final_loss": 2.4027864933013916,
+  "loss_decreased": false
+}
