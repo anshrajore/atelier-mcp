@@ -43,80 +43,89 @@ export const RulesetCoverage = () => {
   const filteredRules = filter === "all" ? rules : rules.filter((r) => r.cat === filter);
 
   return (
-    <section id="ruleset" className="py-24 bg-white border-b border-[#f1f5f9]">
+    <section id="ruleset" className="py-24 bg-white dark:bg-[#090d16] border-b border-[#f1f5f9] dark:border-zinc-800 transition-colors">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center text-center">
           <div className="text-xs font-semibold tracking-widest text-[#ff7a00] uppercase mb-3">
             CANONICAL RULE SPECIFICATION
           </div>
-          <h2 className="font-serif text-3xl sm:text-5xl font-normal text-[#111827] max-w-3xl tracking-tight leading-tight">
+          <h2 className="font-serif text-3xl sm:text-5xl font-normal text-[#111827] dark:text-white max-w-3xl tracking-tight leading-tight">
             36 Mechanically Gradeable Quality Checks
           </h2>
-          <p className="mt-4 max-w-2xl font-sans text-sm sm:text-base text-[#64748b] leading-relaxed">
-            Every rule is defined in <code className="text-[#111827] font-semibold">skills/atelier/SKILL.md</code> with exact pass/fail signatures, AST labeling checks, and automated fixes.
+          <p className="mt-4 max-w-2xl font-sans text-sm sm:text-base text-[#64748b] dark:text-zinc-400 leading-relaxed">
+            Every rule is defined in <code className="text-[#111827] dark:text-zinc-200 font-semibold">skills/atelier/SKILL.md</code> with exact pass/fail signatures, AST labeling checks, and automated fixes.
           </p>
 
           {/* Clean Pill Tab Switcher */}
-          <div className="mt-8 flex items-center p-1 bg-[#f1f5f9] rounded-full text-xs font-medium">
+          <div className="mt-8 flex items-center p-1 bg-[#f1f5f9] dark:bg-zinc-900 rounded-full text-xs font-medium border border-transparent dark:border-zinc-800">
             <button
               onClick={() => setFilter("all")}
-              className={`px-6 py-2 rounded-full transition-all ${
+              className={`px-5 py-2 rounded-full transition-all ${
                 filter === "all"
-                  ? "bg-white text-[#111827] shadow-sm font-semibold"
-                  : "text-[#64748b] hover:text-[#111827]"
+                  ? "bg-white dark:bg-zinc-800 text-[#111827] dark:text-white shadow-sm font-semibold"
+                  : "text-[#64748b] dark:text-zinc-400 hover:text-[#111827] dark:hover:text-white"
               }`}
             >
               All Rules (36)
             </button>
             <button
               onClick={() => setFilter("ui")}
-              className={`px-6 py-2 rounded-full transition-all flex items-center gap-1.5 ${
+              className={`px-5 py-2 rounded-full transition-all ${
                 filter === "ui"
-                  ? "bg-white text-[#111827] shadow-sm font-semibold"
-                  : "text-[#64748b] hover:text-[#111827]"
+                  ? "bg-white dark:bg-zinc-800 text-[#111827] dark:text-white shadow-sm font-semibold"
+                  : "text-[#64748b] dark:text-zinc-400 hover:text-[#111827] dark:hover:text-white"
               }`}
             >
-              <Sparkles className="h-3.5 w-3.5 text-[#ff7a00]" />
-              <span>UI/UX Critic (18)</span>
+              UI/UX Critic (17)
             </button>
             <button
               onClick={() => setFilter("backend")}
-              className={`px-6 py-2 rounded-full transition-all flex items-center gap-1.5 ${
+              className={`px-5 py-2 rounded-full transition-all ${
                 filter === "backend"
-                  ? "bg-white text-[#111827] shadow-sm font-semibold"
-                  : "text-[#64748b] hover:text-[#111827]"
+                  ? "bg-white dark:bg-zinc-800 text-[#111827] dark:text-white shadow-sm font-semibold"
+                  : "text-[#64748b] dark:text-zinc-400 hover:text-[#111827] dark:hover:text-white"
               }`}
             >
-              <Terminal className="h-3.5 w-3.5 text-[#2563eb]" />
-              <span>Backend Guard (18)</span>
+              Backend Guard (19)
             </button>
           </div>
         </div>
 
-        {/* Rules Grid */}
-        <div className="mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 font-sans text-xs">
-          {filteredRules.map((r) => (
+        {/* 3-Column Card Grid */}
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredRules.map((rule) => (
             <div
-              key={r.id}
-              className="rounded-3xl bg-[#fafafa] border border-[#e2e8f0] p-6 flex flex-col justify-between hover:border-[#cbd5e1] hover:shadow-sm transition-all"
+              key={rule.id}
+              className="rounded-3xl bg-[#fafafa] dark:bg-zinc-900/60 border border-[#e2e8f0] dark:border-zinc-800 p-6 flex flex-col justify-between hover:border-[#cbd5e1] dark:hover:border-zinc-700 hover:shadow-md transition-all text-xs"
             >
               <div>
-                <div className="flex items-center justify-between pb-3 border-b border-[#e2e8f0]">
-                  <span className="font-mono text-[#111827] font-bold text-xs">{r.id}</span>
-                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white border border-[#e2e8f0] text-[#64748b] uppercase">
-                    {r.cat === "ui" ? "UI/UX" : "BACKEND"}
+                <div className="flex items-center justify-between pb-3 border-b border-[#e2e8f0] dark:border-zinc-800">
+                  <span className="font-mono font-bold text-[#111827] dark:text-white text-xs">
+                    {rule.id}
+                  </span>
+                  <span
+                    className={`text-[10px] px-2.5 py-0.5 rounded-full font-mono uppercase font-semibold ${
+                      rule.cat === "ui"
+                        ? "bg-orange-50 dark:bg-orange-950/60 text-[#ff7a00] border border-orange-200 dark:border-orange-900"
+                        : "bg-blue-50 dark:bg-blue-950/60 text-[#2563eb] dark:text-blue-400 border border-blue-200 dark:border-blue-900"
+                    }`}
+                  >
+                    {rule.cat === "ui" ? "UI / UX" : "BACKEND"}
                   </span>
                 </div>
-                <h3 className="mt-4 font-semibold text-[#111827] text-sm">
-                  {r.name}
+
+                <h3 className="mt-4 font-sans font-semibold text-[#111827] dark:text-zinc-200 text-sm">
+                  {rule.name}
                 </h3>
-                <p className="mt-2 text-[#64748b] leading-relaxed">
-                  {r.desc}
+
+                <p className="mt-2 text-[#64748b] dark:text-zinc-400 leading-relaxed font-sans">
+                  {rule.desc}
                 </p>
               </div>
-              <div className="mt-6 pt-3 border-t border-[#e2e8f0] text-[11px] text-[#64748b] flex items-center justify-between font-mono">
-                <span>MECHANICAL AST</span>
-                <span className="text-emerald-600 font-medium">AUTO-FIX READY</span>
+
+              <div className="mt-6 pt-3 border-t border-[#e2e8f0] dark:border-zinc-800 text-[11px] font-mono text-[#94a3b8] dark:text-zinc-500 flex items-center justify-between">
+                <span>CHECK: AST / REGEX</span>
+                <span className="text-emerald-600 dark:text-emerald-400 font-semibold">100% Deterministic</span>
               </div>
             </div>
           ))}

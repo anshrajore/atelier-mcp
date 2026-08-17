@@ -35,17 +35,19 @@ export const metadata: Metadata = {
   },
 };
 
+import { ThemeProvider } from "../components/ThemeProvider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body
-        className={`${playfair.variable} ${inter.variable} ${jetbrainsMono.variable} font-sans bg-[#ffffff] text-[#111827] antialiased selection:bg-[#ff7a00] selection:text-white`}
+        className={`${playfair.variable} ${inter.variable} ${jetbrainsMono.variable} font-sans bg-white dark:bg-[#090d16] text-[#111827] dark:text-[#f1f5f9] antialiased selection:bg-[#ff7a00] selection:text-white transition-colors duration-300`}
       >
-        {children}
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

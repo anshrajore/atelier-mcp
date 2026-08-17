@@ -14,10 +14,14 @@ body {
   overflow-x: hidden;
 }
 
-/* Master Ambient Hero Aura (Exact Match to Sarvam Reference) */
+/* Master Ambient Hero Aura (Exact Match to Sarvam Reference - Light & Dark) */
 .hero-aura-background {
   position: relative;
   background: #ffffff;
+}
+
+.dark .hero-aura-background {
+  background: #090d16;
 }
 
 .hero-aura-background::before {
@@ -36,6 +40,14 @@ body {
   z-index: 0;
 }
 
+.dark .hero-aura-background::before {
+  background: 
+    radial-gradient(ellipse 45% 65% at 50% 0%, rgba(255, 104, 0, 0.45) 0%, rgba(255, 120, 38, 0.25) 30%, rgba(255, 154, 60, 0.12) 50%, transparent 80%),
+    radial-gradient(ellipse 70% 50% at 20% 10%, rgba(59, 130, 246, 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 50% at 80% 10%, rgba(99, 102, 241, 0.15) 0%, transparent 60%),
+    linear-gradient(180deg, #0f172a 0%, #090d16 60%, #090d16 100%);
+}
+
 /* Subtle glow effects for cards */
 .subtle-card-glow {
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -44,6 +56,10 @@ body {
 .subtle-card-glow:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(255, 106, 0, 0.12);
+}
+
+.dark .subtle-card-glow:hover {
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 122, 0, 0.3);
 }
 
 /* Custom scrollbar */
@@ -55,9 +71,17 @@ body {
   background: #ffffff;
 }
 
+.dark ::-webkit-scrollbar-track {
+  background: #090d16;
+}
+
 ::-webkit-scrollbar-thumb {
   background: #e2e8f0;
   border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #1e293b;
 }
 
 ::-webkit-scrollbar-thumb:hover {
