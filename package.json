@@ -1,11 +1,22 @@
 {
-  "name": "atelier",
+  "name": "atelier-quality-gate",
   "version": "1.0.0",
   "description": "Two-agent post-generation quality gate (UI/UX Critic & Backend Architecture Guard) for vibe-coded apps",
   "main": "mcp-server/dist/index.js",
   "bin": {
-    "atelier": "./bin/atelier.js"
+    "atelier-quality-gate": "./bin/atelier.js",
+    "atelier": "./bin/atelier.js",
+    "atelier-mcp": "./bin/atelier.js"
   },
+  "files": [
+    "bin",
+    "adapters",
+    "mcp-server/dist",
+    "skills",
+    "rulesets",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "start": "node bin/atelier.js serve",
     "serve": "node bin/atelier.js serve",
