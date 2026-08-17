@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { AlertCircle, CheckCircle2, Copy, Check, ArrowRight, ShieldAlert, Sparkles, Terminal } from "lucide-react";
+import { Check, Copy, Sparkles, Terminal } from "lucide-react";
 
 export const LiveCritiqueDemo = () => {
   const [activeTab, setActiveTab] = useState<"ui" | "backend">("ui");
@@ -48,10 +48,10 @@ export const LiveCritiqueDemo = () => {
     ],
     fixedCode: `1: export const AnalyticsCard = ({ title, count }) => {
 2:   return (
-3:     <div className="p-5 bg-[#0a1017] border border-[#182430] rounded-none">
-4:       <h3 className="text-white text-base font-semibold">{title}</h3>
-5:       <p className="text-[#90a4ae] text-2xl font-mono mt-1">{count}</p>
-6:       <button className="mt-4 px-4 py-2 border border-[#182430] bg-[#060a0f] text-white hover:border-[#00e5ff] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00e5ff] transition-colors font-mono text-xs">
+3:     <div className="p-5 bg-white border border-gray-200 rounded-2xl shadow-sm">
+4:       <h3 className="text-gray-900 text-base font-semibold">{title}</h3>
+5:       <p className="text-gray-500 text-2xl font-mono mt-1">{count}</p>
+6:       <button className="mt-4 px-4 py-2 rounded-full border border-gray-200 bg-gray-50 text-gray-900 hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 transition-colors font-sans text-xs font-medium">
 7:         Inspect Metric
 8:       </button>
 9:     </div>
@@ -130,135 +130,134 @@ export const LiveCritiqueDemo = () => {
   };
 
   return (
-    <section id="live-critique" className="border-b border-[#182430] bg-[#080d12] py-20 lg:py-24">
+    <section id="live-critique" className="py-24 bg-[#fafafa] border-b border-[#f1f5f9]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center text-center">
-          <div className="font-mono text-xs text-[#00e5ff] tracking-wider uppercase mb-2">
+          <div className="text-xs font-semibold tracking-widest text-[#ff7a00] uppercase mb-3">
             INTERACTIVE CRITIQUE INSPECTION
           </div>
-          <h2 className="font-orbitron text-2xl sm:text-4xl font-bold tracking-tight text-white uppercase max-w-3xl">
-            REAL-WORLD BEFORE / CRITIQUE / AFTER
+          <h2 className="font-serif text-3xl sm:text-5xl font-normal text-[#111827] max-w-3xl tracking-tight leading-tight">
+            Real-World Before / Critique / After
           </h2>
-          <p className="mt-4 max-w-2xl font-sans text-sm sm:text-base text-[#90a4ae] leading-relaxed">
+          <p className="mt-4 max-w-2xl font-sans text-sm sm:text-base text-[#64748b] leading-relaxed">
             Witness how Atelier evaluates flawed vibe-coded snippets, extracts mechanical rule violations, and yields unified remediation diffs.
           </p>
 
-          {/* Preset Category Switcher */}
-          <div className="mt-8 flex items-center border border-[#182430] bg-[#0a1017] p-1 font-mono text-xs">
+          {/* Clean Pill Tab Switcher */}
+          <div className="mt-8 flex items-center p-1 bg-[#f1f5f9] rounded-full text-xs font-medium">
             <button
               onClick={() => setActiveTab("ui")}
-              className={`px-5 py-2 transition-colors flex items-center gap-2 ${
+              className={`px-6 py-2 rounded-full transition-all flex items-center gap-2 ${
                 activeTab === "ui"
-                  ? "bg-[#182430] text-[#00e5ff] font-semibold"
-                  : "text-[#90a4ae] hover:text-white"
+                  ? "bg-white text-[#111827] shadow-sm font-semibold"
+                  : "text-[#64748b] hover:text-[#111827]"
               }`}
             >
-              <Sparkles className="h-3.5 w-3.5" />
+              <Sparkles className="h-3.5 w-3.5 text-[#ff7a00]" />
               <span>UI/UX Critic (Next.js / Tailwind)</span>
             </button>
             <button
               onClick={() => setActiveTab("backend")}
-              className={`px-5 py-2 transition-colors flex items-center gap-2 ${
+              className={`px-6 py-2 rounded-full transition-all flex items-center gap-2 ${
                 activeTab === "backend"
-                  ? "bg-[#182430] text-[#00e5ff] font-semibold"
-                  : "text-[#90a4ae] hover:text-white"
+                  ? "bg-white text-[#111827] shadow-sm font-semibold"
+                  : "text-[#64748b] hover:text-[#111827]"
               }`}
             >
-              <Terminal className="h-3.5 w-3.5" />
+              <Terminal className="h-3.5 w-3.5 text-[#2563eb]" />
               <span>Backend Guard (API / n8n)</span>
             </button>
           </div>
         </div>
 
         {/* 3-Column Inspection Grid */}
-        <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch font-mono text-xs">
-          {/* Col 1: Flawed Input (4 cols) */}
-          <div className="lg:col-span-4 border border-[#182430] bg-[#0a1017] flex flex-col justify-between">
+        <div className="mt-14 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch font-mono text-xs">
+          {/* Col 1: Flawed Generation */}
+          <div className="lg:col-span-4 rounded-3xl bg-white border border-[#e2e8f0] shadow-sm flex flex-col justify-between overflow-hidden">
             <div>
-              <div className="flex items-center justify-between border-b border-[#182430] bg-[#0e1620] px-4 py-3 text-[#90a4ae]">
+              <div className="flex items-center justify-between border-b border-[#f1f5f9] bg-[#f8fafc] px-5 py-3.5 text-[#64748b]">
                 <div className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-red-500" />
-                  <span className="text-white font-semibold text-[11px]">FLAWED GENERATION</span>
+                  <span className="h-2 w-2 rounded-full bg-rose-500" />
+                  <span className="font-semibold text-[#111827] text-xs">FLAWED INPUT</span>
                 </div>
-                <span className="text-[10px] text-red-400 font-medium">3 VIOLATIONS</span>
+                <span className="text-[10px] text-rose-600 font-semibold">3 VIOLATIONS</span>
               </div>
-              <div className="p-4 bg-[#060a0f] overflow-x-auto">
-                <pre className="text-red-300/80 leading-relaxed">
+              <div className="p-5 bg-white overflow-x-auto">
+                <pre className="text-rose-950/80 leading-relaxed font-mono">
                   <code>{current.flawedCode}</code>
                 </pre>
               </div>
             </div>
-            <div className="border-t border-[#182430] bg-[#0a1017] p-3 text-[11px] text-[#546e7a]">
-              INPUT SNIPPET: {current.title}
+            <div className="border-t border-[#f1f5f9] bg-[#f8fafc] px-5 py-3 text-[11px] text-[#64748b]">
+              INPUT: {current.title}
             </div>
           </div>
 
-          {/* Col 2: Structured Critique Cards (4 cols) */}
-          <div className="lg:col-span-4 border border-[#182430] bg-[#0a1017] flex flex-col justify-between">
+          {/* Col 2: Atelier Findings */}
+          <div className="lg:col-span-4 rounded-3xl bg-white border border-[#e2e8f0] shadow-sm flex flex-col justify-between overflow-hidden">
             <div>
-              <div className="flex items-center justify-between border-b border-[#182430] bg-[#0e1620] px-4 py-3 text-[#90a4ae]">
+              <div className="flex items-center justify-between border-b border-[#f1f5f9] bg-[#f8fafc] px-5 py-3.5 text-[#64748b]">
                 <div className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-[#00e5ff]" />
-                  <span className="text-[#00e5ff] font-semibold text-[11px]">ATELIER CRITIC FINDINGS</span>
+                  <span className="h-2 w-2 rounded-full bg-[#ff7a00]" />
+                  <span className="font-semibold text-[#111827] text-xs">ATELIER CRITIC</span>
                 </div>
-                <span className="text-[10px] text-[#90a4ae]">SCORE: 40/100</span>
+                <span className="text-[10px] font-semibold text-[#ff7a00]">GRADE: 40/100</span>
               </div>
-              <div className="p-4 flex flex-col gap-3 max-h-[420px] overflow-y-auto">
+              <div className="p-5 flex flex-col gap-3 max-h-[420px] overflow-y-auto">
                 {current.findings.map((f, idx) => (
                   <div
                     key={idx}
-                    className="border border-[#182430] bg-[#060a0f] p-3 flex flex-col gap-1.5"
+                    className="rounded-2xl border border-[#e2e8f0] bg-[#fafafa] p-3.5 flex flex-col gap-1.5"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-[#00e5ff] font-bold text-[11px]">{f.ruleId}</span>
+                      <span className="text-[#111827] font-bold text-xs">{f.ruleId}</span>
                       <span
-                        className={`text-[9px] px-1.5 py-0.2 border ${
+                        className={`text-[9px] font-semibold px-2 py-0.5 rounded-full ${
                           f.severity === "CRITICAL"
-                            ? "border-red-800 bg-red-950/40 text-red-400"
-                            : "border-yellow-800 bg-yellow-950/40 text-yellow-400"
+                            ? "bg-rose-100 text-rose-700"
+                            : "bg-amber-100 text-amber-800"
                         }`}
                       >
                         {f.severity} (L{f.line})
                       </span>
                     </div>
-                    <div className="text-white font-medium text-[11px]">{f.name}</div>
-                    <div className="text-[#90a4ae] text-[10px] leading-normal">{f.issue}</div>
-                    <div className="mt-1 pt-1.5 border-t border-[#182430] text-[#00e5ff] text-[10px] flex items-start gap-1">
-                      <span className="text-[#546e7a]">Fix:</span>
-                      <span>{f.fix}</span>
+                    <div className="text-[#111827] font-medium text-xs">{f.name}</div>
+                    <div className="text-[#64748b] text-[11px] leading-normal">{f.issue}</div>
+                    <div className="mt-1 pt-1.5 border-t border-[#e2e8f0] text-[#ff7a00] text-[11px] font-medium">
+                      Fix: {f.fix}
                     </div>
                   </div>
                 ))}
               </div>
             </div>
-            <div className="border-t border-[#182430] bg-[#0a1017] p-3 text-[11px] text-[#00e5ff]">
+            <div className="border-t border-[#f1f5f9] bg-[#f8fafc] px-5 py-3 text-[11px] text-[#111827] font-semibold">
               AUTO-REMEDIATION READY VIA `ATELIER FIX`
             </div>
           </div>
 
-          {/* Col 3: Remediated Clean Code (4 cols) */}
-          <div className="lg:col-span-4 border border-[#182430] bg-[#0a1017] flex flex-col justify-between">
+          {/* Col 3: Remediated Code */}
+          <div className="lg:col-span-4 rounded-3xl bg-white border border-[#e2e8f0] shadow-sm flex flex-col justify-between overflow-hidden">
             <div>
-              <div className="flex items-center justify-between border-b border-[#182430] bg-[#0e1620] px-4 py-3 text-[#90a4ae]">
+              <div className="flex items-center justify-between border-b border-[#f1f5f9] bg-[#f8fafc] px-5 py-3.5 text-[#64748b]">
                 <div className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-emerald-400" />
-                  <span className="text-white font-semibold text-[11px]">REMEDIATED CODE</span>
+                  <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                  <span className="font-semibold text-[#111827] text-xs">REMEDIATED OUTPUT</span>
                 </div>
                 <button
                   onClick={() => handleCopyCode(current.fixedCode)}
-                  className="flex items-center gap-1 text-[10px] text-[#90a4ae] hover:text-white"
+                  className="flex items-center gap-1 text-[11px] text-[#64748b] hover:text-[#111827]"
                 >
-                  {copied ? <Check className="h-3 w-3 text-[#00e5ff]" /> : <Copy className="h-3 w-3" />}
+                  {copied ? <Check className="h-3 w-3 text-emerald-600" /> : <Copy className="h-3 w-3" />}
                   <span>{copied ? "Copied" : "Copy"}</span>
                 </button>
               </div>
-              <div className="p-4 bg-[#060a0f] overflow-x-auto">
-                <pre className="text-emerald-300/90 leading-relaxed">
+              <div className="p-5 bg-white overflow-x-auto">
+                <pre className="text-emerald-950/90 leading-relaxed font-mono">
                   <code>{current.fixedCode}</code>
                 </pre>
               </div>
             </div>
-            <div className="border-t border-[#182430] bg-[#0a1017] p-3 text-[11px] text-emerald-400 flex items-center justify-between">
+            <div className="border-t border-[#f1f5f9] bg-[#f8fafc] px-5 py-3 text-[11px] text-emerald-700 font-semibold flex items-center justify-between">
               <span>SCORE: 100/100 PASS</span>
               <span>ZERO REGRESSIONS</span>
             </div>

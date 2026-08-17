@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { CheckCircle2, FileCode2, Terminal, RefreshCw } from "lucide-react";
+import { CheckCircle2, RefreshCw } from "lucide-react";
 
 export const SupportedTools = () => {
   const tools = [
@@ -14,77 +14,77 @@ export const SupportedTools = () => {
     {
       name: "Windsurf",
       filePath: ".windsurfrules",
-      format: "Windsurf System Directives",
+      format: "Windsurf Directives",
       status: "SYNCED",
     },
     {
       name: "Claude Code",
       filePath: "CLAUDE.md & AGENTS.md",
-      format: "Modular Subagent Skills",
+      format: "Modular Skills",
       status: "SYNCED",
     },
     {
       name: "Antigravity",
       filePath: ".agents/rules/atelier.md",
-      format: "Native Agentic Quality Gate",
+      format: "Native Agent Gate",
       status: "SYNCED",
     },
     {
       name: "GitHub Copilot",
       filePath: ".github/copilot-instructions.md",
-      format: "Copilot Workspace Instructions",
+      format: "Workspace Rules",
       status: "SYNCED",
     },
   ];
 
   return (
-    <section id="adapters" className="border-b border-[#182430] bg-[#060a0f] py-20 lg:py-24">
+    <section id="adapters" className="py-24 bg-white border-b border-[#f1f5f9]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center text-center">
-          <div className="font-mono text-xs text-[#00e5ff] tracking-wider uppercase mb-2">
+          <div className="text-xs font-semibold tracking-widest text-[#ff7a00] uppercase mb-3">
             UNIVERSAL COMPATIBILITY
           </div>
-          <h2 className="font-orbitron text-2xl sm:text-4xl font-bold tracking-tight text-white uppercase max-w-3xl">
-            PLUGS INTO YOUR FAVORITE AI CODING TOOL
+          <h2 className="font-serif text-3xl sm:text-5xl font-normal text-[#111827] max-w-3xl tracking-tight leading-tight">
+            Plugs into Your Favorite AI Coding Tool
           </h2>
-          <p className="mt-4 max-w-2xl font-sans text-sm sm:text-base text-[#90a4ae] leading-relaxed">
-            All 5 editor adapters are automatically generated and synchronized against <code className="text-[#00e5ff] font-mono">SKILL.md</code> to guarantee zero drift.
+          <p className="mt-4 max-w-2xl font-sans text-sm sm:text-base text-[#64748b] leading-relaxed">
+            All 5 editor adapters are automatically generated and synchronized against <code className="text-[#111827] font-semibold font-mono">SKILL.md</code> to guarantee zero drift.
           </p>
         </div>
 
         {/* Compatibility Strip */}
-        <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 font-mono text-xs">
+        <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 font-sans text-xs">
           {tools.map((t) => (
             <div
               key={t.name}
-              className="border border-[#182430] bg-[#0a1017] p-4 flex flex-col justify-between hover:border-[#00e5ff] transition-colors"
+              className="rounded-3xl bg-[#fafafa] border border-[#e2e8f0] p-5 flex flex-col justify-between hover:border-[#cbd5e1] hover:shadow-sm transition-all"
             >
               <div>
-                <div className="flex items-center justify-between pb-2 border-b border-[#182430]">
-                  <span className="font-orbitron font-bold text-white text-sm">{t.name}</span>
-                  <span className="text-[10px] text-[#00e5ff] font-medium flex items-center gap-1">
-                    <CheckCircle2 className="h-3 w-3" />
+                <div className="flex items-center justify-between pb-3 border-b border-[#e2e8f0]">
+                  <span className="font-bold text-[#111827] text-sm">{t.name}</span>
+                  <span className="text-[10px] text-emerald-600 font-semibold flex items-center gap-1">
+                    <CheckCircle2 className="h-3.5 w-3.5" />
                     <span>{t.status}</span>
                   </span>
                 </div>
-                <div className="mt-3 text-[11px] text-[#90a4ae] break-all">
+                <div className="mt-3 text-[11px] font-mono text-[#64748b] break-all">
                   {t.filePath}
                 </div>
               </div>
-              <div className="mt-4 pt-2 border-t border-[#182430] text-[10px] text-[#546e7a]">
+              <div className="mt-4 pt-3 border-t border-[#e2e8f0] text-[11px] text-[#94a3b8]">
                 {t.format}
               </div>
             </div>
           ))}
         </div>
 
-        {/* Sync Guarantee Badge */}
-        <div className="mt-8 mx-auto max-w-2xl border border-[#182430] bg-[#0a1017] p-4 flex items-center justify-between font-mono text-xs">
-          <div className="flex items-center gap-2 text-[#cfd8dc]">
-            <RefreshCw className="h-4 w-4 text-[#00e5ff]" />
-            <span>Automated CI Check: <code className="text-[#00e5ff]">node scripts/check-sync.js</code></span>
+        {/* Sync Guarantee Pill */}
+        <div className="mt-10 mx-auto max-w-xl rounded-full bg-[#f8fafc] border border-[#e2e8f0] px-6 py-3 flex items-center justify-between font-sans text-xs shadow-sm">
+          <div className="flex items-center gap-2 text-[#475569]">
+            <RefreshCw className="h-4 w-4 text-[#ff7a00]" />
+            <span>Automated CI Check: <code className="font-mono text-[#111827]">node scripts/check-sync.js</code></span>
           </div>
-          <span className="text-[#00e5ff] font-semibold">100% CANONICAL MATCH</span>
+          <span className="text-emerald-600 font-semibold">100% MATCH</span>
         </div>
       </div>
     </section>

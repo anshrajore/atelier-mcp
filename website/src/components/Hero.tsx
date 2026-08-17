@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Terminal, Shield, ArrowRight, Check, Copy, Sparkles, Cpu, Layers } from "lucide-react";
+import { ArrowRight, Terminal, Check, Copy } from "lucide-react";
 
 export const Hero = () => {
   const [copied, setCopied] = useState(false);
@@ -15,130 +15,103 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative overflow-hidden border-b border-[#182430] bg-[#060a0f] pt-16 pb-20 lg:pt-24 lg:pb-28">
-      {/* Background technical grid and subtle radial glow */}
-      <div className="absolute inset-0 technical-grid opacity-30 pointer-events-none" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 subtle-radial pointer-events-none" />
-
+    <section className="relative overflow-hidden hero-aura-background pt-12 pb-16 lg:pt-16 lg:pb-24">
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center text-center">
-          {/* Engineering attribution badge */}
-          <div className="inline-flex items-center gap-2 border border-[#182430] bg-[#0a1017] px-3 py-1 text-xs font-mono text-[#90a4ae] mb-6">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#00e5ff] animate-pulse" />
-            <span>ENGINEERED BY ANSH RAJORE</span>
-            <span className="text-[#546e7a]">|</span>
-            <span className="text-[#00e5ff]">36 MECHANICALLY GRADEABLE RULES</span>
+          {/* Decorative Filigree Flourish (Matching Sarvam Reference) */}
+          <div className="w-28 h-8 text-[#1e2330]/70 flex items-center justify-center mb-4">
+            <svg viewBox="0 0 100 24" fill="none" className="w-full h-full stroke-current">
+              <path
+                d="M50 12 C40 4, 30 4, 20 12 C10 20, 5 12, 1 12 M50 12 C60 4, 70 4, 80 12 C90 20, 95 12, 99 12 M35 12 C30 8, 25 8, 20 12 C15 16, 10 12, 8 12 M65 12 C70 8, 75 8, 80 12 C85 16, 90 12, 92 12"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+              <circle cx="50" cy="12" r="2.5" fill="currentColor" />
+            </svg>
           </div>
 
-          {/* Display Headline in Orbitron */}
-          <h1 className="font-orbitron text-3xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl max-w-5xl uppercase leading-tight">
-            POST-GENERATION QUALITY GATE FOR VIBE CODING
+          {/* Subtitle / Tagline Pill */}
+          <div className="text-xs sm:text-sm font-medium tracking-wide text-[#2563eb] mb-6">
+            Two-Agent Post-Generation Quality Gate
+          </div>
+
+          {/* Large Editorial Display Headline (Newsreader Serif) */}
+          <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-normal text-[#111827] max-w-4xl tracking-tight leading-[1.1]">
+            Quality for all AI Code
           </h1>
 
-          {/* Positioning statement */}
-          <p className="mt-6 max-w-3xl font-sans text-base text-[#cfd8dc] sm:text-lg lg:text-xl leading-relaxed">
-            Ponytail-style rulesets only enforce code minimalism. <strong className="text-white font-semibold">Atelier</strong> adds two post-generation quality critics—a <span className="text-[#00e5ff]">UI/UX Critic</span> and a <span className="text-[#00e5ff]">Backend Architecture Guard</span>—powered by a self-hostable fine-tuned model and universal MCP integration.
+          {/* 3-line Sub-headline */}
+          <p className="mt-6 max-w-2xl font-sans text-base sm:text-lg text-[#4b5563] leading-relaxed font-light">
+            Built on 36 mechanical gradeable rules. Powered by fine-tuned models.<br />
+            Delivering zero-regression vibe coding.
           </p>
 
-          {/* CTAs */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4 font-mono text-sm">
+          {/* Centered Twin Action Pill Buttons */}
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-sm font-medium">
             <a
               href="https://github.com/anshrajore/atelier-mcp"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 border border-[#00e5ff] bg-[#00e5ff] px-6 py-3 font-semibold text-[#060a0f] hover:bg-[#5ce1e6] hover:border-[#5ce1e6] transition-all shadow-[0_0_20px_rgba(0,229,255,0.2)]"
+              className="px-8 py-3.5 rounded-full bg-[#1e2330] text-white hover:bg-[#111827] transition-all shadow-md hover:shadow-lg"
             >
-              <span>Get Started on GitHub</span>
-              <ArrowRight className="h-4 w-4" />
+              Get Started
             </a>
 
             <Link
               href="/docs"
-              className="flex items-center gap-2 border border-[#182430] bg-[#0a1017] px-6 py-3 text-white hover:border-[#00e5ff] hover:bg-[#0e1620] transition-colors"
+              className="px-8 py-3.5 rounded-full bg-white border border-[#e2e8f0] text-[#1e2330] hover:bg-[#f8fafc] transition-all shadow-sm"
             >
-              <span>Read Documentation</span>
+              Documentation
             </Link>
+          </div>
 
+          {/* Secondary Quick CLI Copy Pill */}
+          <div className="mt-6 flex items-center gap-2">
             <button
               onClick={handleCopy}
-              className="flex items-center gap-2 border border-[#182430] bg-[#0a1017] px-4 py-3 text-[#90a4ae] hover:text-white hover:border-[#2b4760] transition-colors"
-              title="Copy quick install command"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-[#e2e8f0] text-xs font-mono text-[#4b5563] hover:text-[#111827] shadow-sm transition-all"
             >
-              <Terminal className="h-4 w-4 text-[#00e5ff]" />
-              <span className="text-xs">{installCmd}</span>
-              {copied ? <Check className="h-3.5 w-3.5 text-[#00e5ff]" /> : <Copy className="h-3.5 w-3.5 text-[#546e7a]" />}
+              <Terminal className="h-3.5 w-3.5 text-[#ff7a00]" />
+              <span>{installCmd}</span>
+              {copied ? (
+                <Check className="h-3 w-3 text-emerald-600" />
+              ) : (
+                <Copy className="h-3 w-3 text-[#94a3b8]" />
+              )}
             </button>
           </div>
 
-          {/* Live Critique Simulation HUD Container */}
-          <div className="mt-14 w-full max-w-5xl border border-[#182430] bg-[#0a1017] text-left shadow-2xl">
-            {/* Terminal Window Header */}
-            <div className="flex items-center justify-between border-b border-[#182430] bg-[#0e1620] px-4 py-2.5 font-mono text-xs text-[#90a4ae]">
-              <div className="flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f56]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[#27c93f]" />
-                <span className="ml-2 text-[#cfd8dc] font-semibold">atelier-mcp stdio session</span>
-              </div>
-              <div className="flex items-center gap-4 text-[11px]">
-                <span className="text-[#546e7a]">MODEL: atelier-qwen-1.5b-mlx</span>
-                <span className="text-[#00e5ff]">LATENCY: 12ms (Heuristic)</span>
-                <span className="text-[#27c93f]">STATUS: 100% READY</span>
-              </div>
+          {/* Logo Cloud Strip Header (Matching "INDIA BUILDS WITH SARVAM") */}
+          <div className="mt-20 pt-8 border-t border-[#f1f5f9] w-full max-w-6xl">
+            <div className="text-[11px] font-semibold tracking-widest text-[#64748b] uppercase mb-8">
+              DEVELOPERS & AGENTS BUILD WITH ATELIER
             </div>
 
-            {/* Terminal Content Split Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-[#182430] font-mono text-xs">
-              {/* Flawed Generation Input */}
-              <div className="p-5 bg-[#060a0f]/60">
-                <div className="flex items-center justify-between pb-3 text-[#546e7a] border-b border-[#182430] mb-3">
-                  <span className="text-white font-medium">{"// AI Generated Component (Pre-Critic)"}</span>
-                  <span className="text-red-400 font-semibold text-[11px]">2 VIOLATIONS</span>
-                </div>
-                <pre className="text-[#90a4ae] leading-relaxed overflow-x-auto">
-                  <code>
-{`1: export const PricingCard = () => (
-2:   <div className="bg-gradient-to-r from-purple-500 to-indigo-600">
-3:     <button className="p-[19px] shadow-2xl">
-4:       Upgrade Plan
-5:     </button>
-6:   </div>
-7: );`}
-                  </code>
-                </pre>
-                <div className="mt-4 flex flex-col gap-1.5 text-[11px]">
-                  <div className="flex items-center gap-2 text-red-400 bg-red-950/30 border border-red-900/40 px-2.5 py-1">
-                    <span>Line 2:</span>
-                    <span>BASE-UI-106 (Rainbow Gradient Cliché)</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-red-400 bg-red-950/30 border border-red-900/40 px-2.5 py-1">
-                    <span>Line 3:</span>
-                    <span>BASE-UI-101 (Arbitrary 19px Spacing Token)</span>
-                  </div>
-                </div>
+            {/* Monochrome Logo Cloud */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-8 items-center justify-center opacity-70 grayscale hover:opacity-100 transition-opacity font-mono text-xs font-bold text-[#334155]">
+              <div className="flex items-center justify-center gap-1.5 hover:text-[#111827]">
+                <span>CURSOR</span>
               </div>
-
-              {/* Atelier Critic Remediation Output */}
-              <div className="p-5 bg-[#0a1017]">
-                <div className="flex items-center justify-between pb-3 text-[#546e7a] border-b border-[#182430] mb-3">
-                  <span className="text-[#00e5ff] font-medium">{"// Atelier Post-Generation Output"}</span>
-                  <span className="text-[#27c93f] font-semibold text-[11px]">AUTO-REMEDIATED</span>
-                </div>
-                <pre className="text-[#cfd8dc] leading-relaxed overflow-x-auto">
-                  <code>
-{`1: export const PricingCard = () => (
-2:   <div className="bg-zinc-900 border border-zinc-800">
-3:     <button className="p-5 shadow-sm focus-visible:ring-2 focus-visible:ring-zinc-400">
-4:       Upgrade Plan
-5:     </button>
-6:   </div>
-7: );`}
-                  </code>
-                </pre>
-                <div className="mt-4 flex items-center justify-between text-[11px] bg-[#060a0f] border border-[#182430] px-3 py-2">
-                  <span className="text-[#90a4ae]">Grade: <strong className="text-white">100/100 COMPLIANT</strong></span>
-                  <span className="text-[#00e5ff]">AST Validated & Zero Regressions</span>
-                </div>
+              <div className="flex items-center justify-center gap-1.5 hover:text-[#111827]">
+                <span>WINDSURF</span>
+              </div>
+              <div className="flex items-center justify-center gap-1.5 hover:text-[#111827]">
+                <span>CLAUDE CODE</span>
+              </div>
+              <div className="flex items-center justify-center gap-1.5 hover:text-[#111827]">
+                <span>ANTIGRAVITY</span>
+              </div>
+              <div className="flex items-center justify-center gap-1.5 hover:text-[#111827]">
+                <span>GITHUB COPILOT</span>
+              </div>
+              <div className="flex items-center justify-center gap-1.5 hover:text-[#111827]">
+                <span>NEXT.JS</span>
+              </div>
+              <div className="flex items-center justify-center gap-1.5 hover:text-[#111827]">
+                <span>N8N</span>
+              </div>
+              <div className="flex items-center justify-center gap-1.5 hover:text-[#111827]">
+                <span>APPLE MLX</span>
               </div>
             </div>
           </div>

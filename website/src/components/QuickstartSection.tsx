@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Terminal, Copy, Check, FileJson, Cpu, Play } from "lucide-react";
+import { Terminal, Copy, Check, FileJson, Play } from "lucide-react";
 
 export const QuickstartSection = () => {
   const [activeTab, setActiveTab] = useState<"cli" | "mcp" | "setup">("cli");
@@ -42,27 +42,27 @@ cd atelier-mcp
   };
 
   return (
-    <section id="quickstart" className="border-b border-[#182430] bg-[#080d12] py-20 lg:py-24">
+    <section id="quickstart" className="py-24 bg-[#fafafa] border-b border-[#f1f5f9]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center text-center">
-          <div className="font-mono text-xs text-[#00e5ff] tracking-wider uppercase mb-2">
+          <div className="text-xs font-semibold tracking-widest text-[#ff7a00] uppercase mb-3">
             INSTANT ONBOARDING
           </div>
-          <h2 className="font-orbitron text-2xl sm:text-4xl font-bold tracking-tight text-white uppercase max-w-3xl">
-            GET STARTED IN UNDER 60 SECONDS
+          <h2 className="font-serif text-3xl sm:text-5xl font-normal text-[#111827] max-w-3xl tracking-tight leading-tight">
+            Get Started in Under 60 Seconds
           </h2>
-          <p className="mt-4 max-w-2xl font-sans text-sm sm:text-base text-[#90a4ae] leading-relaxed">
+          <p className="mt-4 max-w-2xl font-sans text-sm sm:text-base text-[#64748b] leading-relaxed">
             Run standalone via terminal CLI, start the MCP stdio daemon, or add Atelier directly to your Claude Desktop or Cursor configuration.
           </p>
 
-          {/* Quickstart Tab Buttons */}
-          <div className="mt-8 flex items-center border border-[#182430] bg-[#0a1017] p-1 font-mono text-xs">
+          {/* Clean Pill Tab Switcher */}
+          <div className="mt-8 flex items-center p-1 bg-[#f1f5f9] rounded-full text-xs font-medium">
             <button
               onClick={() => setActiveTab("cli")}
-              className={`px-4 py-1.5 transition-colors flex items-center gap-2 ${
+              className={`px-6 py-2 rounded-full transition-all flex items-center gap-2 ${
                 activeTab === "cli"
-                  ? "bg-[#182430] text-[#00e5ff] font-semibold"
-                  : "text-[#90a4ae] hover:text-white"
+                  ? "bg-white text-[#111827] shadow-sm font-semibold"
+                  : "text-[#64748b] hover:text-[#111827]"
               }`}
             >
               <Terminal className="h-3.5 w-3.5" />
@@ -70,10 +70,10 @@ cd atelier-mcp
             </button>
             <button
               onClick={() => setActiveTab("mcp")}
-              className={`px-4 py-1.5 transition-colors flex items-center gap-2 ${
+              className={`px-6 py-2 rounded-full transition-all flex items-center gap-2 ${
                 activeTab === "mcp"
-                  ? "bg-[#182430] text-[#00e5ff] font-semibold"
-                  : "text-[#90a4ae] hover:text-white"
+                  ? "bg-white text-[#111827] shadow-sm font-semibold"
+                  : "text-[#64748b] hover:text-[#111827]"
               }`}
             >
               <FileJson className="h-3.5 w-3.5" />
@@ -81,39 +81,39 @@ cd atelier-mcp
             </button>
             <button
               onClick={() => setActiveTab("setup")}
-              className={`px-4 py-1.5 transition-colors flex items-center gap-2 ${
+              className={`px-6 py-2 rounded-full transition-all flex items-center gap-2 ${
                 activeTab === "setup"
-                  ? "bg-[#182430] text-[#00e5ff] font-semibold"
-                  : "text-[#90a4ae] hover:text-white"
+                  ? "bg-white text-[#111827] shadow-sm font-semibold"
+                  : "text-[#64748b] hover:text-[#111827]"
               }`}
             >
               <Play className="h-3.5 w-3.5" />
-              <span>1-Click Setup Script</span>
+              <span>1-Click Setup</span>
             </button>
           </div>
         </div>
 
-        {/* Code Snippet Box */}
-        <div className="mt-8 mx-auto max-w-4xl border border-[#182430] bg-[#0a1017] shadow-xl">
-          <div className="flex items-center justify-between border-b border-[#182430] bg-[#0e1620] px-4 py-2.5 font-mono text-xs text-[#90a4ae]">
+        {/* Code Box */}
+        <div className="mt-10 mx-auto max-w-3xl rounded-3xl bg-[#1e2330] text-white shadow-xl overflow-hidden">
+          <div className="flex items-center justify-between border-b border-[#2d3748] bg-[#151922] px-6 py-3.5 text-xs text-[#94a3b8]">
             <div className="flex items-center gap-2">
               <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f56]" />
               <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]" />
               <span className="h-2.5 w-2.5 rounded-full bg-[#27c93f]" />
-              <span className="ml-2 text-white font-medium">
-                {activeTab === "cli" ? "Terminal CLI Execution" : activeTab === "mcp" ? "mcp_config.json" : "Bash One-Click Setup"}
+              <span className="ml-2 font-mono text-white text-xs">
+                {activeTab === "cli" ? "Terminal CLI" : activeTab === "mcp" ? "mcp_config.json" : "setup.sh"}
               </span>
             </div>
             <button
               onClick={() => handleCopy(cliSnippets[activeTab])}
-              className="flex items-center gap-1 text-[11px] text-[#90a4ae] hover:text-white transition-colors"
+              className="flex items-center gap-1.5 text-xs text-[#94a3b8] hover:text-white transition-colors"
             >
-              {copied ? <Check className="h-3.5 w-3.5 text-[#00e5ff]" /> : <Copy className="h-3.5 w-3.5" />}
-              <span>{copied ? "Copied to Clipboard" : "Copy Code"}</span>
+              {copied ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}
+              <span>{copied ? "Copied" : "Copy Code"}</span>
             </button>
           </div>
-          <div className="p-6 bg-[#060a0f] overflow-x-auto">
-            <pre className="font-mono text-xs text-[#cfd8dc] leading-relaxed">
+          <div className="p-6 bg-[#1e2330] overflow-x-auto">
+            <pre className="font-mono text-xs text-gray-200 leading-relaxed">
               <code>{cliSnippets[activeTab]}</code>
             </pre>
           </div>
