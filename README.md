@@ -6,7 +6,7 @@
 <br />
 
 [![CI](https://github.com/anshrajore/atelier-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/anshrajore/atelier-mcp/actions/workflows/ci.yml)
-[![Website](https://img.shields.io/badge/Website-atelier--mcp.vercel.app-00e5ff.svg)](website)
+[![Live Website](https://img.shields.io/badge/Live_Website-Vercel-ff6a00.svg)](https://website-psi-wine-nizygatt3w.vercel.app)
 [![License: MIT](https://img.shields.io/badge/License-MIT-ffffff.svg)](https://opensource.org/licenses/MIT)
 [![MCP Compatible](https://img.shields.io/badge/MCP-Protocol-ffffff.svg)](https://modelcontextprotocol.io)
 [![Author](https://img.shields.io/badge/Developer-Ansh_Rajore-ffffff.svg)](https://github.com/anshrajore)
