@@ -6,7 +6,7 @@
 <br />
 
 [![CI](https://github.com/anshrajore/atelier-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/anshrajore/atelier-mcp/actions/workflows/ci.yml)
-[![Live Website](https://img.shields.io/badge/Live_Website-Vercel-ff6a00.svg)](https://website-psi-wine-nizygatt3w.vercel.app)
+[![Live Website](https://img.shields.io/badge/Live_Website-atelier--quality--gate.vercel.app-ff6a00.svg)](https://atelier-quality-gate.vercel.app)
 [![License: MIT](https://img.shields.io/badge/License-MIT-ffffff.svg)](https://opensource.org/licenses/MIT)
 [![MCP Compatible](https://img.shields.io/badge/MCP-Protocol-ffffff.svg)](https://modelcontextprotocol.io)
 [![Author](https://img.shields.io/badge/Developer-Ansh_Rajore-ffffff.svg)](https://github.com/anshrajore)
@@ -14,7 +14,7 @@
 <p align="center">
   <strong>The two-agent post-generation quality gate for vibe-coded applications.</strong><br />
   <em>Eliminates generic AI design clichés, uncalibrated UI layouts, and backend architectural flaws before code reaches production.</em><br />
-  <strong><a href="website">🌐 Explore the Marketing & Documentation Website (`/website`) →</a></strong>
+  <strong><a href="https://atelier-quality-gate.vercel.app">🌐 Explore the Live Website (atelier-quality-gate.vercel.app) →</a></strong>
 </p>
 
 </div>
