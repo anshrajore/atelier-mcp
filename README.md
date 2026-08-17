@@ -6,13 +6,15 @@
 <br />
 
 [![CI](https://github.com/anshrajore/atelier-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/anshrajore/atelier-mcp/actions/workflows/ci.yml)
+[![Website](https://img.shields.io/badge/Website-atelier--mcp.vercel.app-00e5ff.svg)](website)
 [![License: MIT](https://img.shields.io/badge/License-MIT-ffffff.svg)](https://opensource.org/licenses/MIT)
 [![MCP Compatible](https://img.shields.io/badge/MCP-Protocol-ffffff.svg)](https://modelcontextprotocol.io)
 [![Author](https://img.shields.io/badge/Developer-Ansh_Rajore-ffffff.svg)](https://github.com/anshrajore)
 
 <p align="center">
   <strong>The two-agent post-generation quality gate for vibe-coded applications.</strong><br />
-  <em>Eliminates generic AI design clichés, uncalibrated UI layouts, and backend architectural flaws before code reaches production.</em>
+  <em>Eliminates generic AI design clichés, uncalibrated UI layouts, and backend architectural flaws before code reaches production.</em><br />
+  <strong><a href="website">🌐 Explore the Marketing & Documentation Website (`/website`) →</a></strong>
 </p>
 
 </div>

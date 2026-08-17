@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" width="100%" height="100%">
+  <defs>
+    <linearGradient id="matrixBwBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#000000" />
+      <stop offset="50%" stop-color="#080808" />
+      <stop offset="100%" stop-color="#020202" />
+    </linearGradient>
+    <pattern id="matrixGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#141414" stroke-width="0.75" />
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="620" rx="14" fill="url(#matrixBwBg)" stroke="#222222" stroke-width="1.5" />
+  <rect width="1200" height="620" rx="14" fill="url(#matrixGrid)" opacity="0.7" />
+
+  <!-- Corner Accents -->
+  <path d="M 18 32 L 18 18 L 32 18" fill="none" stroke="#ffffff" stroke-width="1.5" />
+  <path d="M 1182 32 L 1182 18 L 1168 18" fill="none" stroke="#ffffff" stroke-width="1.5" />
+  <path d="M 18 588 L 18 602 L 32 602" fill="none" stroke="#ffffff" stroke-width="1.5" />
+  <path d="M 1182 588 L 1182 602 L 1168 602" fill="none" stroke="#ffffff" stroke-width="1.5" />
+
+  <!-- Top Title Header -->
+  <g transform="translate(60, 42)">
+    <text x="0" y="0" fill="#ffffff" font-family="'Orbitron', sans-serif" font-size="20" font-weight="800" letter-spacing="2">ATELIER TWO-AGENT RULESET &amp; CHECK MATRIX</text>
+    <text x="0" y="24" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="12">CANONICAL MECHANICAL THRESHOLDS, LABELING FUNCTIONS &amp; SEVERITY POLICIES</text>
+    
+    <!-- Developer Badge -->
+    <g transform="translate(760, -18)">
+      <rect width="320" height="26" rx="4" fill="#0c0c0c" stroke="#ffffff" stroke-width="1" />
+      <text x="12" y="17" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="10">DEVELOPED BY</text>
+      <text x="105" y="17" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="800" letter-spacing="1.5">ANSH RAJORE</text>
+      <circle cx="300" cy="13" r="3" fill="#ffffff" />
+    </g>
+  </g>
+
+  <line x1="60" y1="78" x2="1140" y2="78" stroke="#1f1f1f" stroke-width="1" />
+
+  <!-- Column 1: UI/UX CRITIC RULES -->
+  <g transform="translate(60, 100)">
+    <rect width="525" height="465" rx="8" fill="#050505" stroke="#333333" stroke-width="1.5" />
+    <rect width="525" height="32" rx="8" fill="#141414" />
+    <text x="16" y="21" fill="#ffffff" font-family="'Orbitron', sans-serif" font-size="12" font-weight="800" letter-spacing="1">UI/UX CRITIC // DESIGN SYSTEM RULES</text>
+    <circle cx="495" cy="16" r="3" fill="#ffffff" />
+
+    <!-- Rule 1 -->
+    <g transform="translate(16, 46)">
+      <rect width="493" height="66" rx="4" fill="#0a0a0a" stroke="#222222" stroke-width="1" />
+      <text x="12" y="20" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700">BASE-UI-101: 8px Harmonic Spacing Matrix</text>
+      <text x="430" y="20" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="10">CRITICAL</text>
+      <text x="12" y="38" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="10">Threshold: All padding, margin, gap must align to 4px/8px tokens.</text>
+      <text x="12" y="54" fill="#cccccc" font-family="'JetBrains Mono', monospace" font-size="10">Check: regex:(m|p|gap)-\[(\d+)px\] &amp;&amp; val % 4 !== 0</text>
+    </g>
+
+    <!-- Rule 2 -->
+    <g transform="translate(16, 120)">
+      <rect width="493" height="66" rx="4" fill="#0a0a0a" stroke="#222222" stroke-width="1" />
+      <text x="12" y="20" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700">BASE-UI-103: WCAG AA Minimum Contrast Floor</text>
+      <text x="430" y="20" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="10">CRITICAL</text>
+      <text x="12" y="38" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="10">Threshold: Normal text ≥ 4.5:1 contrast against surface background.</text>
+      <text x="12" y="54" fill="#cccccc" font-family="'JetBrains Mono', monospace" font-size="10">Check: regex:text-(zinc|gray|slate)-(300|400) on light surfaces</text>
+    </g>
+
+    <!-- Rule 3 -->
+    <g transform="translate(16, 194)">
+      <rect width="493" height="66" rx="4" fill="#0a0a0a" stroke="#222222" stroke-width="1" />
+      <text x="12" y="20" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700">BASE-UI-104: Single Optical Focal Point</text>
+      <text x="430" y="20" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="10">WARNING</text>
+      <text x="12" y="38" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="10">Threshold: Max 1 primary CTA button with high-contrast fill per screen.</text>
+      <text x="12" y="54" fill="#cccccc" font-family="'JetBrains Mono', monospace" font-size="10">Check: count(&lt;Button variant="primary"&gt;) &gt; 1 per viewport</text>
+    </g>
+
+    <!-- Rule 4 -->
+    <g transform="translate(16, 268)">
+      <rect width="493" height="66" rx="4" fill="#0a0a0a" stroke="#222222" stroke-width="1" />
+      <text x="12" y="20" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700">BASE-UI-105: Decorative Ceiling Policy</text>
+      <text x="430" y="20" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="10">WARNING</text>
+      <text x="12" y="38" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="10">Threshold: Max 2 decorative elements (gradients, drop-shadows) per view.</text>
+      <text x="12" y="54" fill="#cccccc" font-family="'JetBrains Mono', monospace" font-size="10">Check: count(bg-gradient-* | shadow-(lg|xl|2xl)) &gt; 2</text>
+    </g>
+
+    <!-- Rule 5 -->
+    <g transform="translate(16, 342)">
+      <rect width="493" height="66" rx="4" fill="#0a0a0a" stroke="#222222" stroke-width="1" />
+      <text x="12" y="20" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700">NEXT-UI-105: Focus-Visible Indicator Mandatory</text>
+      <text x="430" y="20" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="10">WARNING</text>
+      <text x="12" y="38" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="10">Threshold: Interactive controls must provide visible outline on tab.</text>
+      <text x="12" y="54" fill="#cccccc" font-family="'JetBrains Mono', monospace" font-size="10">Check: regex:focus-visible:(ring|outline|border)</text>
+    </g>
+
+    <!-- Bottom summary -->
+    <g transform="translate(16, 420)">
+      <text x="0" y="20" fill="#555555" font-family="'JetBrains Mono', monospace" font-size="10">+ 12 ADDITIONAL PRESET RULES IN skills/atelier/presets/nextjs-tailwind.md</text>
+    </g>
+  </g>
+
+  <!-- Column 2: BACKEND GUARD RULES -->
+  <g transform="translate(615, 100)">
+    <rect width="525" height="465" rx="8" fill="#050505" stroke="#333333" stroke-width="1.5" />
+    <rect width="525" height="32" rx="8" fill="#141414" />
+    <text x="16" y="21" fill="#ffffff" font-family="'Orbitron', sans-serif" font-size="12" font-weight="800" letter-spacing="1">BACKEND GUARD // SOUNDNESS &amp; SCHEMA</text>
+    <circle cx="495" cy="16" r="3" fill="#ffffff" />
+
+    <!-- Rule 1 -->
+    <g transform="translate(16, 46)">
+      <rect width="493" height="66" rx="4" fill="#0a0a0a" stroke="#222222" stroke-width="1" />
+      <text x="12" y="20" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700">BASE-BE-101: Zero Hardcoded Secrets (OWASP)</text>
+      <text x="430" y="20" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="10">CRITICAL</text>
+      <text x="12" y="38" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="10">Threshold: Zero raw API keys, tokens, or JWT secrets in source code.</text>
+      <text x="12" y="54" fill="#cccccc" font-family="'JetBrains Mono', monospace" font-size="10">Check: regex:(api_key|secret|bearer|token)\s*=\s*['"][A-Za-z0-9_\-]{8,}['"]</text>
+    </g>
+
+    <!-- Rule 2 -->
+    <g transform="translate(16, 120)">
+      <rect width="493" height="66" rx="4" fill="#0a0a0a" stroke="#222222" stroke-width="1" />
+      <text x="12" y="20" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700">BASE-BE-102: Boundary Schema Validation</text>
+      <text x="430" y="20" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="10">CRITICAL</text>
+      <text x="12" y="38" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="10">Threshold: External inputs (req.body/params) must parse via schema.</text>
+      <text x="12" y="54" fill="#cccccc" font-family="'JetBrains Mono', monospace" font-size="10">Check: regex:(zod|pydantic|valibot|joi|z\.|Schema\.)</text>
+    </g>
+
+    <!-- Rule 3 -->
+    <g transform="translate(16, 194)">
+      <rect width="493" height="66" rx="4" fill="#0a0a0a" stroke="#222222" stroke-width="1" />
+      <text x="12" y="20" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700">BASE-BE-103: Sanitized Error Response Dumps</text>
+      <text x="430" y="20" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="10">CRITICAL</text>
+      <text x="12" y="38" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="10">Threshold: Raw error.stack or internals must never be returned to client.</text>
+      <text x="12" y="54" fill="#cccccc" font-family="'JetBrains Mono', monospace" font-size="10">Check: regex:res\.(json|send)\(.*(err\.stack|error\.stack)\)</text>
+    </g>
+
+    <!-- Rule 4 -->
+    <g transform="translate(16, 268)">
+      <rect width="493" height="66" rx="4" fill="#0a0a0a" stroke="#222222" stroke-width="1" />
+      <text x="12" y="20" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700">BASE-BE-105: Default Request Timeout &amp; Rate Limits</text>
+      <text x="430" y="20" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="10">WARNING</text>
+      <text x="12" y="38" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="10">Threshold: Outbound network calls must define explicit abort/timeout ms.</text>
+      <text x="12" y="54" fill="#cccccc" font-family="'JetBrains Mono', monospace" font-size="10">Check: regex:fetch\(.*signal:\s*AbortSignal\.timeout</text>
+    </g>
+
+    <!-- Rule 5 -->
+    <g transform="translate(16, 342)">
+      <rect width="493" height="66" rx="4" fill="#0a0a0a" stroke="#222222" stroke-width="1" />
+      <text x="12" y="20" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700">N8N-BE-105: Mandatory Error Trigger Node</text>
+      <text x="430" y="20" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="10">CRITICAL</text>
+      <text x="12" y="38" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="10">Threshold: Production workflow JSON must declare onError: continueErrorOutput.</text>
+      <text x="12" y="54" fill="#cccccc" font-family="'JetBrains Mono', monospace" font-size="10">Check: json:nodes[].onError !== "stopWorkflow"</text>
+    </g>
+
+    <!-- Bottom summary -->
+    <g transform="translate(16, 420)">
+      <text x="0" y="20" fill="#555555" font-family="'JetBrains Mono', monospace" font-size="10">+ 10 ADDITIONAL PRESET RULES IN skills/atelier/presets/n8n.md</text>
+    </g>
+  </g>
+
+  <!-- Bottom Details Stamp -->
+  <g transform="translate(60, 592)">
+    <text x="0" y="12" fill="#444444" font-family="'JetBrains Mono', monospace" font-size="10">ATELIER CORE SPECIFICATION // ALL RULES PASS/FAIL DETERMINISTICALLY</text>
+    <text x="890" y="12" fill="#888888" font-family="'JetBrains Mono', monospace" font-size="10">DEVELOPED BY ANSH RAJORE</text>
+  </g>
+</svg>
