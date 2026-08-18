@@ -11,6 +11,7 @@ import { BenchmarkScoreboard } from "../components/BenchmarkScoreboard";
 import { SupportedTools } from "../components/SupportedTools";
 import { AboutAnshRajore } from "../components/AboutAnshRajore";
 import { QuickstartSection } from "../components/QuickstartSection";
+import { GuideSection } from "../components/GuideSection";
 import { Footer } from "../components/Footer";
 
 export default function Home() {
@@ -28,6 +29,7 @@ export default function Home() {
       <SupportedTools />
       <AboutAnshRajore />
       <QuickstartSection />
+      <GuideSection />
       <Footer />
     </main>
   );

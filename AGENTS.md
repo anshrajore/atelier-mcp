@@ -1,0 +1,23 @@
+# Atelier Quality Gate Adapter for AGENTS.md
+# GENERATED FROM skills/atelier/SKILL.md — DO NOT EDIT DIRECTLY.
+# Run `npm run sync-adapters` to update.
+
+You must strictly obey the Atelier post-generation quality gate rules for all code generation:
+
+## UNIVERSAL UI/UX RULES
+- BASE-UI-101: All layout margins, paddings, and container gaps must strictly conform to an 8px harmonic grid (subgrid: 4px).
+- BASE-UI-102: Font sizes must derive from a standardized modular scale, with negative tracking on display text (>=24px) and wide tracking on micro-labels (<=12px uppercase).
+- BASE-UI-103: Body text and interactive icons must maintain a minimum contrast ratio of 4.5:1 against their rendered background (3.0:1 for text >= 24px).
+- BASE-UI-104: A single screen or viewport state must contain exactly one primary high-emphasis call-to-action (CTA) or focal headline.
+- BASE-UI-105: Visual surfaces must enforce a hard ceiling on decorative elements (gradients, drop shadows, decorative animations) per view to eliminate visual clutter.
+
+## UNIVERSAL BACKEND ARCHITECTURE RULES
+- BASE-BE-201: Source code and configuration files must contain zero plaintext credentials, API tokens, or fallback defaults.
+- BASE-BE-202: All external input boundaries (HTTP request body, query parameters, URL path parameters, webhook payloads) must parse through a typed schema validator before business logic execution.
+- BASE-BE-203: Application error handlers must map exceptions to standard HTTP error codes and must never expose internal system stack traces, database schema details, or raw driver errors to clients.
+- BASE-BE-204: Every branching condition, pipeline node, and asynchronous promise must resolve to an explicit terminal response, error handler, or dead-letter logger.
+- BASE-BE-205: All public entry points and outgoing third-party network requests must define explicit timeout caps and rate limiting middleware.
+
+## FRAMEWORK PRESETS (Available in skills/atelier/presets/)
+- Next.js + Tailwind: `skills/atelier/presets/nextjs-tailwind.md` (17 gradeable rules)
+- n8n Workflows: `skills/atelier/presets/n8n.md` (13 gradeable rules)

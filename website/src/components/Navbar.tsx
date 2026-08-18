@@ -34,6 +34,9 @@ export const Navbar = () => {
           <Link href="/#scoreboard" className="hover:text-[#111827] dark:hover:text-white transition-colors">
             Benchmarks
           </Link>
+          <Link href="/#guide" className="hover:text-[#111827] dark:hover:text-white transition-colors">
+            Guide
+          </Link>
           <Link href="/docs" className="hover:text-[#111827] dark:hover:text-white transition-colors">
             Docs
           </Link>
@@ -86,6 +89,9 @@ export const Navbar = () => {
             </Link>
             <Link href="/#scoreboard" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[#111827]">
               Benchmarks
+            </Link>
+            <Link href="/#guide" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[#111827]">
+              Guide
             </Link>
             <Link href="/docs" onClick={() => setMobileMenuOpen(false)} className="py-1 text-[#111827] flex items-center gap-1">
               <BookOpen className="h-3.5 w-3.5" />
