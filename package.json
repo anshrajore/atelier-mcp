@@ -1,6 +1,6 @@
 {
   "name": "atelier-quality-gate",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Two-agent post-generation quality gate (UI/UX Critic & Backend Architecture Guard) for vibe-coded apps",
   "main": "mcp-server/dist/index.js",
   "bin": {

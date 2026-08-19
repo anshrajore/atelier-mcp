@@ -1,3 +1,4 @@
+import ts from 'typescript';
 import { CritiqueFinding, CriticType, RuleDefinition } from './types.js';
 
 export interface LLMConfig {
@@ -112,7 +113,6 @@ Respond ONLY with valid JSON conforming to:
     rules: RuleDefinition[],
     corpusContext: string
   ): Promise<{ findings: CritiqueFinding[]; score: number; summary: string }> {
-    // Anthropic API adapter
     try {
       const res = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
@@ -190,7 +190,7 @@ Respond ONLY with valid JSON conforming to:
   }
 
   /**
-   * Deterministic static analysis engine for instant zero-dependency execution.
+   * Deterministic static analysis engine utilizing TypeScript compiler AST.
    */
   public runHeuristicEvaluation(
     critic: CriticType,
@@ -199,25 +199,228 @@ Respond ONLY with valid JSON conforming to:
   ): { findings: CritiqueFinding[]; score: number; summary: string } {
     const findings: CritiqueFinding[] = [];
     const lines = code.split('\n');
+    let parsedWithAST = false;
 
+    // Check if code block contains typical JS/TS declarations to decide on AST parse
+    const looksLikeJsTs = /import\s|const\s|let\s|function\s|class\s|export\s|<\w+\s+className=/.test(code);
+
+    if (looksLikeJsTs) {
+      try {
+        const sourceFile = ts.createSourceFile('temp.tsx', code, ts.ScriptTarget.Latest, true);
+
+        const visit = (node: ts.Node) => {
+          // --- UI Critic AST Rules ---
+          if (critic === 'ui') {
+          // 1. Spacing Violations: snaps invalid pixel grids
+          if (ts.isJsxAttribute(node) && ts.isIdentifier(node.name) && node.name.text === 'className' && node.initializer) {
+            let classNameVal = '';
+            if (ts.isStringLiteral(node.initializer)) {
+              classNameVal = node.initializer.text;
+            } else if (ts.isJsxExpression(node.initializer) && node.initializer.expression && ts.isStringLiteral(node.initializer.expression)) {
+              classNameVal = node.initializer.expression.text;
+            }
+            if (classNameVal) {
+              const spacingMatches = classNameVal.match(/(?:m|p|gap|top|left|right|bottom|w|h)-\[(\d+)px\]/g) || [];
+              spacingMatches.forEach(m => {
+                const valMatch = m.match(/\d+/);
+                if (valMatch) {
+                  const val = parseInt(valMatch[0], 10);
+                  if (val % 4 !== 0 && val > 2) {
+                    const { line } = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile));
+                    const rounded = Math.round(val / 4) * 4;
+                    const fixStr = m.replace(String(val), String(rounded));
+                    findings.push({
+                      ruleId: 'UI-101',
+                      severity: 'suggestion',
+                      title: `Ad-hoc Uncalibrated Spacing (${val}px)`,
+                      location: { line: line + 1, snippet: node.getText(sourceFile) },
+                      explanation: `Spacing value ${val}px violates the 4px/8px design system spacing grid.`,
+                      concreteFix: `Snap ${val}px to ${rounded}px or use standard Tailwind spacing tokens.`,
+                      diff: `- className="${classNameVal}"\n+ className="${classNameVal.replace(m, fixStr)}"`,
+                    });
+                  }
+                }
+              });
+            }
+          }
+
+          // 2. Interactive States & Keyboard Focus on Buttons / Links
+          if (ts.isJsxOpeningElement(node) || ts.isJsxSelfClosingElement(node)) {
+            const tagName = node.tagName.getText(sourceFile);
+            if (tagName === 'button' || tagName === 'Button') {
+              let hasFocusVisible = false;
+              let hasHover = false;
+              let classNameVal = '';
+
+              const attrs = ts.isJsxOpeningElement(node) ? node.attributes.properties : node.attributes.properties;
+              attrs.forEach(attr => {
+                if (ts.isJsxAttribute(attr) && ts.isIdentifier(attr.name) && attr.name.text === 'className' && attr.initializer) {
+                  const valText = attr.initializer.getText(sourceFile);
+                  if (valText.includes('focus-visible:')) hasFocusVisible = true;
+                  if (valText.includes('hover:')) hasHover = true;
+                  classNameVal = valText.replace(/['"`]/g, '');
+                }
+              });
+
+              if (!hasFocusVisible) {
+                const { line } = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile));
+                findings.push({
+                  ruleId: 'UI-110',
+                  severity: 'warning',
+                  title: 'Incomplete Button Keyboard Focus Ring',
+                  location: { line: line + 1, snippet: node.getText(sourceFile) },
+                  explanation: 'Interactive controls lack visible focus indicators for keyboard navigation.',
+                  concreteFix: 'Add focus-visible:ring-2 focus-visible:outline-none states.',
+                  diff: classNameVal
+                    ? `- className="${classNameVal}"\n+ className="${classNameVal} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff7a00]"`
+                    : `+ focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff7a00]`,
+                });
+              }
+            }
+          }
+
+          // 3. Raw img layout shifts
+          if (ts.isJsxOpeningElement(node) || ts.isJsxSelfClosingElement(node)) {
+            const tagName = node.tagName.getText(sourceFile);
+            if (tagName === 'img') {
+              const { line } = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile));
+              findings.push({
+                ruleId: 'UI-102',
+                severity: 'critical',
+                title: 'Forbidden Raw <img> Element (CLS)',
+                location: { line: line + 1, snippet: node.getText(sourceFile) },
+                explanation: 'Raw <img> element without next/image causes Visual Layout Shift (CLS).',
+                concreteFix: 'Use <Image> from "next/image" with explicit width and height properties.',
+              });
+            }
+          }
+        }
+
+        // --- Backend Guard AST Rules ---
+        if (critic === 'backend') {
+          // 1. Secrets variable declarations
+          if (ts.isVariableDeclaration(node) && node.initializer) {
+            const varName = node.name.getText(sourceFile).toUpperCase();
+            if (
+              (varName.includes('SECRET') || varName.includes('KEY') || varName.includes('TOKEN') || varName.includes('PASSWORD')) &&
+              ts.isStringLiteral(node.initializer)
+            ) {
+              const secretVal = node.initializer.text;
+              if (secretVal.length > 5 && !secretVal.startsWith('process.env') && !secretVal.includes('placeholder')) {
+                const { line } = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile));
+                findings.push({
+                  ruleId: 'BE-201',
+                  severity: 'critical',
+                  title: 'Hardcoded Cryptographic Secret / Credential',
+                  location: { line: line + 1, snippet: node.getText(sourceFile) },
+                  explanation: `Variable '${node.name.getText(sourceFile)}' is assigned a plaintext secret: "${secretVal.slice(0, 4)}..."`,
+                  concreteFix: 'Extract to process.env configuration file with boot verification.',
+                  diff: `- const ${node.name.getText(sourceFile)} = "${secretVal}";\n+ const ${node.name.getText(sourceFile)} = process.env.${node.name.getText(sourceFile)} || "";`,
+                });
+              }
+            }
+          }
+
+          // 2. Async function try/catch exception boundaries
+          if (
+            ts.isFunctionDeclaration(node) ||
+            ts.isArrowFunction(node) ||
+            ts.isFunctionExpression(node) ||
+            ts.isMethodDeclaration(node)
+          ) {
+            const isAsync = node.modifiers?.some(m => m.kind === ts.SyntaxKind.AsyncKeyword);
+            if (isAsync && node.body) {
+              const bodyText = node.body.getText(sourceFile);
+              const hasTryCatch = bodyText.includes('try') && bodyText.includes('catch');
+              if (!hasTryCatch) {
+                const funcName = ts.isFunctionDeclaration(node) && node.name ? node.name.text : 'anonymous';
+                const { line } = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile));
+                findings.push({
+                  ruleId: 'BE-207',
+                  severity: 'warning',
+                    title: `Missing Async Error Boundary in "${funcName}"`,
+                    location: { line: line + 1, snippet: node.getText(sourceFile).split('\n')[0] },
+                    explanation: 'Async function execution path lacks top-level exception handler boundaries.',
+                    concreteFix: 'Wrap async execution logic in try { ... } catch (err) { ... } filters.',
+                  });
+                }
+              }
+            }
+
+            // 3. N+1 database queries in loop
+            if (
+              ts.isForStatement(node) ||
+              ts.isForOfStatement(node) ||
+              ts.isForInStatement(node) ||
+              ts.isWhileStatement(node) ||
+              ts.isDoStatement(node)
+            ) {
+              let hasAwaitQuery = false;
+              let querySnippet = '';
+
+              const checkLoop = (child: ts.Node) => {
+                if (ts.isAwaitExpression(child)) {
+                  const awaitText = child.getText(sourceFile);
+                  if (
+                    awaitText.includes('db.') ||
+                    awaitText.includes('prisma.') ||
+                    awaitText.includes('Query') ||
+                    awaitText.includes('find') ||
+                    awaitText.includes('create')
+                  ) {
+                    hasAwaitQuery = true;
+                    querySnippet = awaitText;
+                  }
+                }
+                ts.forEachChild(child, checkLoop);
+              };
+              ts.forEachChild(node, checkLoop);
+
+              if (hasAwaitQuery) {
+                const { line } = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile));
+                findings.push({
+                  ruleId: 'BE-204',
+                  severity: 'critical',
+                  title: 'N+1 Database Query in Loop Iteration',
+                  location: { line: line + 1, snippet: querySnippet },
+                  explanation: 'Executing database operations inside loops leads to high DB latency.',
+                  concreteFix: 'Batch requests using join tables or fetch arrays using WHERE IN clause.',
+                });
+              }
+            }
+          }
+
+          ts.forEachChild(node, visit);
+        };
+
+        visit(sourceFile);
+        parsedWithAST = true;
+      } catch (err) {
+        console.warn('TypeScript Compiler API failed to parse. Falling back to regex.', err);
+      }
+    }
+
+    // --- Fallback Regex Checks (For non-JS/TS or if AST parse didn't cover/run) ---
     if (critic === 'ui') {
       // Check UI-105: Forbidden Purple on Dark
-      lines.forEach((line, idx) => {
-        if (
-          (line.includes('bg-[#0b0b14]') || line.includes('bg-[#09090b]') || line.includes('bg-black')) &&
-          (line.includes('border-purple-') || line.includes('border-violet-') || line.includes('#8b5cf6') || line.includes('#a855f7'))
-        ) {
-          findings.push({
-            ruleId: 'UI-105',
-            severity: 'critical',
-            title: 'Forbidden Purple-on-Dark AI Cliché Template',
-            location: { line: idx + 1, snippet: line.trim() },
-            explanation: 'Detected stereotypical purple glow on black background pattern.',
-            concreteFix: 'Switch to a neutral slate/zinc surface (e.g. bg-zinc-900 border-zinc-800) with crisp contrast.',
-            diff: `- ${line.trim()}\n+ ${line.replace(/border-(purple|violet)-\d+/g, 'border-zinc-800').replace(/bg-(black|\[#0b0b14\])/g, 'bg-zinc-900').trim()}`,
-          });
-        }
-      });
+      if (!parsedWithAST || findings.length === 0) {
+        lines.forEach((line, idx) => {
+          if (
+            (line.includes('bg-[#0b0b14]') || line.includes('bg-[#09090b]') || line.includes('bg-black')) &&
+            (line.includes('border-purple-') || line.includes('border-violet-') || line.includes('#8b5cf6') || line.includes('#a855f7'))
+          ) {
+            findings.push({
+              ruleId: 'UI-105',
+              severity: 'critical',
+              title: 'Forbidden Purple-on-Dark AI Cliché Template',
+              location: { line: idx + 1, snippet: line.trim() },
+              explanation: 'Detected stereotypical purple glow on black background pattern.',
+              concreteFix: 'Switch to a neutral slate/zinc surface (e.g. bg-zinc-900 border-zinc-800) with crisp contrast.',
+              diff: `- ${line.trim()}\n+ ${line.replace(/border-(purple|violet)-\d+/g, 'border-zinc-800').replace(/bg-(black|\[#0b0b14\])/g, 'bg-zinc-900').trim()}`,
+            });
+          }
+        });
+      }
 
       // Check UI-106: Forbidden Pulsing Pill above Headline
       lines.forEach((line, idx) => {
@@ -251,113 +454,35 @@ Respond ONLY with valid JSON conforming to:
             severity: 'warning',
             title: 'Forbidden Rainbow Gradient Text Keywords',
             location: { line: idx + 1, snippet: line.trim() },
-            explanation: 'Multi-color gradient text clipping creates visual noise and degrades contrast.',
-            concreteFix: 'Use deliberate typographic weight or a single solid accent color token.',
+            explanation: 'Multi-color gradient text creates high visual noise.',
+            concreteFix: 'Use typographic weight or single solid accent color token.',
             diff: `- ${line.trim()}\n+ ${line.replace(/bg-clip-text text-transparent bg-gradient-to-[a-z0-9- ]+/g, 'text-foreground font-bold').trim()}`,
-          });
-        }
-      });
-
-      // Check UI-101: Harmonic Spacing Scale
-      lines.forEach((line, idx) => {
-        const arbitraryPxMatches = line.match(/(?:(?:p|px|py|pt|pb|pl|pr|m|mx|my|mt|mb|ml|mr|gap|top|left|right|bottom|h|w)-?\[(\d+)px\]|(?:margin|padding|gap|top|left|right|bottom):\s*(\d+)px)/g);
-        if (arbitraryPxMatches) {
-          arbitraryPxMatches.forEach(token => {
-            const numMatch = token.match(/\d+/);
-            if (numMatch) {
-              const num = parseInt(numMatch[0], 10);
-              if (num % 4 !== 0 && num > 2) {
-                findings.push({
-                  ruleId: 'UI-101',
-                  severity: 'suggestion',
-                  title: `Ad-hoc Uncalibrated Spacing (${num}px)`,
-                  location: { line: idx + 1, snippet: line.trim() },
-                  explanation: `Spacing value ${num}px violates the 4px/8px harmonic grid.`,
-                  concreteFix: `Snap ${num}px to ${Math.round(num / 4) * 4}px or use Tailwind standard spacing tokens.`,
-                });
-              }
-            }
-          });
-        }
-      });
-
-      // Check UI-110: Missing Interactive States on Buttons
-      lines.forEach((line, idx) => {
-        if (
-          (line.includes('<button') || line.includes('<Button')) &&
-          !line.includes('focus-visible:') &&
-          !line.includes('hover:')
-        ) {
-          findings.push({
-            ruleId: 'UI-110',
-            severity: 'warning',
-            title: 'Incomplete Button Interaction States',
-            location: { line: idx + 1, snippet: line.trim() },
-            explanation: 'Button lacks hover feedback and keyboard focus-visible rings.',
-            concreteFix: 'Add hover:bg-opacity/90 and focus-visible:ring-2 focus-visible:outline-none states.',
           });
         }
       });
     }
 
     if (critic === 'backend') {
-      // Check BE-201: Hardcoded Secrets & Fallback Defaults
-      lines.forEach((line, idx) => {
-        if (
-          (line.includes('JWT_SECRET') || line.includes('API_KEY') || line.includes('SECRET_KEY') || line.includes('DATABASE_URL')) &&
-          (line.includes('|| "') || line.includes("|| '") || line.includes('="') || line.includes("='")) &&
-          !line.includes('process.env.NODE_ENV')
-        ) {
-          findings.push({
-            ruleId: 'BE-201',
-            severity: 'critical',
-            title: 'Hardcoded Secret or Insecure Fallback Default',
-            location: { line: idx + 1, snippet: line.trim() },
-            explanation: 'Detected hardcoded credential fallback in source code.',
-            concreteFix: 'Extract to validated environment schema (e.g. Zod) and fail fast at startup if missing.',
-            diff: `- ${line.trim()}\n+ const secret = env.JWT_SECRET; // Validated via boot schema`,
-          });
-        }
-      });
-
       // Check BE-202: Unvalidated Request Payload Boundary
-      lines.forEach((line, idx) => {
-        if (
-          (line.includes('req.body.') || line.includes('const {') && lines.slice(Math.max(0, idx - 3), idx + 1).some(l => l.includes('req.body'))) &&
-          !code.includes('.parse(') && !code.includes('.validate(') && !code.includes('z.object') && !code.includes('Pydantic')
-        ) {
-          findings.push({
-            ruleId: 'BE-202',
-            severity: 'critical',
-            title: 'Missing Boundary Schema Validation on Request Body',
-            location: { line: idx + 1, snippet: line.trim() },
-            explanation: 'Request body properties are consumed directly without schema validation.',
-            concreteFix: 'Pass req.body through a Zod/Pydantic parser to validate structure and types.',
-          });
-        }
-      });
+      if (!parsedWithAST || findings.length === 0) {
+        lines.forEach((line, idx) => {
+          if (
+            (line.includes('req.body.') || line.includes('const {') && lines.slice(Math.max(0, idx - 3), idx + 1).some(l => l.includes('req.body'))) &&
+            !code.includes('.parse(') && !code.includes('.validate(') && !code.includes('z.object') && !code.includes('Pydantic')
+          ) {
+            findings.push({
+              ruleId: 'BE-202',
+              severity: 'critical',
+              title: 'Missing Boundary Schema Validation on Request Body',
+              location: { line: idx + 1, snippet: line.trim() },
+              explanation: 'Request body properties are consumed directly without schema validation.',
+              concreteFix: 'Pass req.body through a Zod/Pydantic parser to validate structure and types.',
+            });
+          }
+        });
+      }
 
-      // Check BE-204: N+1 Database Query in Loop
-      lines.forEach((line, idx) => {
-        if (
-          (line.includes('for (') || line.includes('.map(') || line.includes('.forEach(')) &&
-          (code.slice(code.indexOf(line), code.indexOf(line) + 400).includes('await db.') ||
-           code.slice(code.indexOf(line), code.indexOf(line) + 400).includes('await prisma.') ||
-           code.slice(code.indexOf(line), code.indexOf(line) + 400).includes('await User.') ||
-           code.slice(code.indexOf(line), code.indexOf(line) + 400).includes('await Post.'))
-        ) {
-          findings.push({
-            ruleId: 'BE-204',
-            severity: 'critical',
-            title: 'N+1 Database Query Pattern in Iteration',
-            location: { line: idx + 1, snippet: line.trim() },
-            explanation: 'Executing database queries inside iteration loops creates serious performance bottlenecks.',
-            concreteFix: 'Batch query using SQL WHERE IN (...), Prisma include / select, or DataLoader.',
-          });
-        }
-      });
-
-      // Check BE-206: Disconnected/Orphan Workflow Nodes (Workflow JSON inspection)
+      // Check BE-206: Disconnected/Orphan Workflow Nodes
       if (code.includes('"nodes"') && (code.includes('"connections"') || code.includes('"edges"'))) {
         try {
           const workflow = JSON.parse(code);
@@ -393,25 +518,34 @@ Respond ONLY with valid JSON conforming to:
             }
           });
         } catch {
-          // Non-JSON workflow code
+          // Ignore JSON errors
         }
       }
     }
 
+    // Deduplicate findings by ruleId & line number
+    const seen = new Set<string>();
+    const uniqueFindings = findings.filter(f => {
+      const key = `${f.ruleId}:${f.location?.line || 0}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+
     // Calculate score: 100 base minus penalties
     let score = 100;
-    findings.forEach(f => {
+    uniqueFindings.forEach(f => {
       if (f.severity === 'critical') score -= 25;
       else if (f.severity === 'warning') score -= 10;
       else score -= 5;
     });
     score = Math.max(0, Math.min(100, score));
 
-    const passed = score >= 80 && !findings.some(f => f.severity === 'critical');
+    const passed = score >= 80 && !uniqueFindings.some(f => f.severity === 'critical');
     const summary = passed
-      ? `Quality gate passed (Score: ${score}/100) with ${findings.length} minor suggestions.`
-      : `Quality gate failed (Score: ${score}/100) with ${findings.filter(f => f.severity === 'critical').length} critical issues.`;
+      ? `Quality gate passed (Score: ${score}/100) with ${uniqueFindings.length} minor suggestions.`
+      : `Quality gate failed (Score: ${score}/100) with ${uniqueFindings.filter(f => f.severity === 'critical').length} critical issues.`;
 
-    return { findings, score, summary };
+    return { findings: uniqueFindings, score, summary };
   }
 }

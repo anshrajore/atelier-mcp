@@ -177,11 +177,40 @@ function auditCode(code, filename) {
   return { score: Math.max(score, 0), findings };
 }
 
+// ─── Config & Ignore Helpers ──────────────────────────────────────────────────
+function shouldIgnore(filePath, ignoreList) {
+  const defaultIgnore = ['node_modules', '.git', '.next', 'dist', 'build', 'out', '__pycache__', 'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml'];
+  const list = ignoreList || defaultIgnore;
+  const normalized = filePath.replace(/\\/g, '/');
+  return list.some(pattern => {
+    const regexPattern = pattern
+      .replace(/\./g, '\\.')
+      .replace(/\*\*/g, '.*')
+      .replace(/\*/g, '[^/]*');
+    return new RegExp(regexPattern).test(normalized);
+  });
+}
+
+function walkDir(dir, ignoreList) {
+  const results = [];
+  if (!fs.existsSync(dir)) return results;
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (const e of entries) {
+    const full = path.join(dir, e.name);
+    if (shouldIgnore(full, ignoreList)) continue;
+    if (e.isDirectory()) {
+      results.push(...walkDir(full, ignoreList));
+    } else {
+      results.push(full);
+    }
+  }
+  return results;
+}
+
 // ─── CLI: audit command ───────────────────────────────────────────────────────
 function commandAudit(targetPath) {
-  printBanner();
   if (!targetPath) {
-    console.error(`${RED}Error:${RESET} Provide a file or directory path.\n  Example: atelier audit ./src/components\n`);
+    console.error(`${RED}Error:${RESET} Provide a file or directory path.\n  Example: npx atelier audit ./src/components\n`);
     process.exit(1);
   }
 
@@ -193,16 +222,23 @@ function commandAudit(targetPath) {
 
   const stat = fs.statSync(resolvedPath);
   const files = stat.isDirectory()
-    ? walkDir(resolvedPath).filter(f => /\.(tsx|jsx|ts|js|css|html|vue|svelte|py|go)$/i.test(f))
+    ? walkDir(resolvedPath, customIgnoreList).filter(f => /\.(tsx|jsx|ts|js|css|html|vue|svelte|py|go)$/i.test(f))
     : [resolvedPath];
 
   if (files.length === 0) {
-    console.log(`${DIM}No auditable files found in: ${resolvedPath}${RESET}\n`);
+    if (format === 'summary') {
+      printBanner();
+      console.log(`${DIM}No auditable files found in: ${resolvedPath}${RESET}\n`);
+    } else if (format === 'json') {
+      console.log(JSON.stringify({ files: [], findings: [], averageScore: 100, passed: true }, null, 2));
+    }
     return;
   }
 
+  const results = [];
   let totalScore = 0;
   let totalFindings = 0;
+  let criticalCount = 0;
 
   files.forEach(file => {
     const code = fs.readFileSync(file, 'utf8');
@@ -210,45 +246,84 @@ function commandAudit(targetPath) {
     const { score, findings } = auditCode(code, file);
     totalScore += score;
     totalFindings += findings.length;
+    criticalCount += findings.filter(f => f.severity === 'critical').length;
 
-    const scoreColor = score === 100 ? GREEN : score >= 80 ? YELLOW : RED;
-    console.log(`${BOLD}${rel}${RESET}  ${scoreColor}Score: ${score}/100${RESET}`);
-
-    if (findings.length === 0) {
-      console.log(`  ${GREEN}✓ No violations found${RESET}`);
-    } else {
-      findings.forEach(f => {
-        const sev = f.severity === 'critical' ? RED : f.severity === 'error' ? RED : YELLOW;
-        console.log(`  ${sev}[${f.ruleId}] Line ${f.line}: ${f.message}${RESET}`);
-        if (f.fix) console.log(`  ${DIM}  FIX: ${f.fix}${RESET}`);
-      });
-    }
-    console.log('');
+    results.push({
+      file: rel,
+      score,
+      findings,
+    });
   });
 
-  const avg = Math.round(totalScore / files.length);
-  const avgColor = avg === 100 ? GREEN : avg >= 80 ? YELLOW : RED;
-  console.log(`${BOLD}SUMMARY:${RESET} ${files.length} file(s) | ${totalFindings} violation(s) | Average Score: ${avgColor}${avg}/100${RESET}\n`);
-}
+  const averageScore = Math.round(totalScore / files.length);
+  const passed = averageScore >= customThreshold && criticalCount === 0;
 
-function walkDir(dir) {
-  const results = [];
-  const skip = ['node_modules', '.git', '.next', 'dist', 'build', 'out', '__pycache__'];
-  const entries = fs.readdirSync(dir, { withFileTypes: true });
-  for (const e of entries) {
-    if (skip.includes(e.name)) continue;
-    const full = path.join(dir, e.name);
-    if (e.isDirectory()) results.push(...walkDir(full));
-    else results.push(full);
+  if (format === 'json') {
+    console.log(JSON.stringify({
+      passed,
+      averageScore,
+      threshold: customThreshold,
+      totalFiles: files.length,
+      totalFindings,
+      criticalFindings: criticalCount,
+      results,
+    }, null, 2));
+  } else if (format === 'github') {
+    results.forEach(res => {
+      res.findings.forEach(f => {
+        const severity = f.severity === 'critical' ? 'error' : 'warning';
+        console.log(`::${severity} file=${res.file},line=${f.line},col=1::[${f.ruleId}] ${f.message}`);
+      });
+    });
+  } else {
+    // summary layout
+    printBanner();
+    console.log(`┌──────────────────────────────────────────────────────────────────────┐`);
+    console.log(`│ ${BOLD}AUDIT TELEMETRY${RESET}                                                      │`);
+    console.log(`└──────────────────────────────────────────────────────────────────────┘`);
+    
+    results.forEach(res => {
+      const scoreColor = res.score === 100 ? GREEN : res.score >= 80 ? YELLOW : RED;
+      console.log(`  ${BOLD}${res.file}${RESET} ${scoreColor}[Score: ${res.score}/100]${RESET}`);
+      if (res.findings.length === 0) {
+        console.log(`    ${GREEN}✓ Passed:${RESET} Zero violations detected.`);
+      } else {
+        res.findings.forEach(f => {
+          const prefix = f.severity === 'critical' ? `${RED}✖ [${f.ruleId}]` : `${YELLOW}⚠ [${f.ruleId}]`;
+          console.log(`    ${prefix} Line ${f.line}: ${f.message}${RESET}`);
+          if (f.fix) console.log(`      ${DIM}FIX: ${f.fix}${RESET}`);
+        });
+      }
+      console.log('');
+    });
+
+    const avgColor = averageScore === 100 ? GREEN : averageScore >= 80 ? YELLOW : RED;
+    
+    // Quality bar
+    const barsCount = Math.round(averageScore / 5);
+    const qualityBar = GREEN + '█'.repeat(barsCount) + RED + '░'.repeat(20 - barsCount) + RESET;
+
+    console.log(`┌──────────────────────────────────────────────────────────────────────┐`);
+    console.log(`│ ${BOLD}SUMMARY REPORT${RESET}                                                       │`);
+    console.log(`├──────────────────────────────────────────────────────────────────────┤`);
+    console.log(`  Files Audited:    ${files.length}`);
+    console.log(`  Violations Found: ${totalFindings}`);
+    console.log(`  Critical Issues:  ${criticalCount}`);
+    console.log(`  Quality Index:    ${avgColor}${averageScore}/100${RESET} [${qualityBar}]`);
+    console.log(`  Status:           ${passed ? GREEN + 'PASSED (Quality Gate Active)' + RESET : RED + 'FAILED (Threshold is ' + customThreshold + ')' + RESET}`);
+    console.log(`└──────────────────────────────────────────────────────────────────────┘\n`);
   }
-  return results;
+
+  if (!passed) {
+    process.exit(1);
+  }
 }
 
 // ─── CLI: fix command ─────────────────────────────────────────────────────────
 function commandFix(targetPath) {
   printBanner();
   if (!targetPath) {
-    console.error(`${RED}Error:${RESET} Provide a file or directory path.\n  Example: atelier fix ./src/components\n`);
+    console.error(`${RED}Error:${RESET} Provide a file or directory path.\n  Example: npx atelier fix ./src/components\n`);
     process.exit(1);
   }
 
@@ -260,7 +335,7 @@ function commandFix(targetPath) {
 
   const stat = fs.statSync(resolvedPath);
   const files = stat.isDirectory()
-    ? walkDir(resolvedPath).filter(f => /\.(tsx|jsx|ts|js|css|html)$/i.test(f))
+    ? walkDir(resolvedPath, customIgnoreList).filter(f => /\.(tsx|jsx|ts|js|css|html)$/i.test(f))
     : [resolvedPath];
 
   let modifiedCount = 0;
@@ -281,7 +356,7 @@ function commandFix(targetPath) {
     if (code !== original) {
       fs.writeFileSync(file, code, 'utf8');
       const rel = path.relative(process.cwd(), file);
-      console.log(`${GREEN}FIXED:${RESET} ${rel}`);
+      console.log(`  ${GREEN}✓ Snapped:${RESET} ${rel}`);
       modifiedCount++;
     }
   });
@@ -377,11 +452,9 @@ function commandInstall(target) {
 
 // ─── CLI: serve (MCP stdio) command ──────────────────────────────────────────
 function commandServe() {
-  // Build MCP server if not already built
   if (!fs.existsSync(MCP_SERVER_DIST)) {
     console.error(`MCP server not built. Building now...`);
     try {
-      // Use cross-platform approach: run npm in mcp-server directory
       execSync('npm install', { cwd: path.join(ROOT_DIR, 'mcp-server'), stdio: 'inherit', shell: true });
       execSync('npm run build', { cwd: path.join(ROOT_DIR, 'mcp-server'), stdio: 'inherit', shell: true });
     } catch (e) {
@@ -393,7 +466,7 @@ function commandServe() {
   const serverProc = spawn('node', [MCP_SERVER_DIST], {
     stdio: 'inherit',
     env: process.env,
-    shell: IS_WINDOWS, // On Windows, spawn with shell:true for better compatibility
+    shell: IS_WINDOWS,
   });
 
   serverProc.on('error', (err) => {
@@ -412,6 +485,10 @@ function printHelp() {
   console.log(`${BOLD}USAGE:${RESET}
   npx -y atelier-quality-gate <command> [options]
 
+${BOLD}OPTIONS:${RESET}
+  -f, --format <format>     Output format: summary | json | github (default: summary)
+  -c, --config <path>       Specify custom config json file (default: .atelierrc.json)
+
 ${BOLD}COMMANDS:${RESET}
   ${BOLD}audit <path>${RESET}        Scan a file or directory against 36 quality rules
   ${BOLD}fix <path>${RESET}          Auto-remediate spacing & design violations in-place
@@ -423,10 +500,9 @@ ${BOLD}COMMANDS:${RESET}
 
 ${BOLD}EXAMPLES:${RESET}
   $ npx -y atelier-quality-gate audit ./src/components/Hero.tsx
-  $ npx -y atelier-quality-gate audit ./src
+  $ npx -y atelier-quality-gate audit ./src --format github
   $ npx -y atelier-quality-gate fix ./src/components
   $ npx -y atelier-quality-gate install all
-  $ npx -y atelier-quality-gate install cursor
   $ npx -y atelier-quality-gate serve
 
 ${BOLD}PLATFORM:${RESET}
@@ -457,21 +533,57 @@ ${BOLD}DEVELOPER:${RESET}
 `);
 }
 
-// ─── CLI Router ───────────────────────────────────────────────────────────────
+// ─── CLI Router & Argument Parsing ───────────────────────────────────────────
 const args = process.argv.slice(2);
-const command = (args[0] || 'help').toLowerCase();
+let format = 'summary';
+let configPath = '.atelierrc.json';
+let customIgnoreList = null;
+let customThreshold = 80;
+
+const cleanedArgs = [];
+for (let i = 0; i < args.length; i++) {
+  const arg = args[i];
+  if (arg === '--format' || arg === '-f') {
+    format = args[++i] || 'summary';
+  } else if (arg === '--config' || arg === '-c') {
+    configPath = args[++i] || '.atelierrc.json';
+  } else {
+    cleanedArgs.push(arg);
+  }
+}
+
+// Load .atelierrc.json config if present
+const resolvedConfigPath = path.resolve(process.cwd(), configPath);
+if (fs.existsSync(resolvedConfigPath)) {
+  try {
+    const configData = JSON.parse(fs.readFileSync(resolvedConfigPath, 'utf8'));
+    if (configData.ignore) {
+      customIgnoreList = configData.ignore;
+    }
+    if (configData.threshold !== undefined) {
+      customThreshold = configData.threshold;
+    }
+  } catch (e) {
+    // Silently ignore or print warning if not json format
+    if (format === 'summary') {
+      console.warn(`${YELLOW}Warning:${RESET} Failed to parse configuration file: ${e.message}`);
+    }
+  }
+}
+
+const command = (cleanedArgs[0] || 'help').toLowerCase();
 
 switch (command) {
   case 'audit':
   case 'check':
-    commandAudit(args[1]);
+    commandAudit(cleanedArgs[1]);
     break;
   case 'fix':
-    commandFix(args[1]);
+    commandFix(cleanedArgs[1]);
     break;
   case 'install':
   case 'init':
-    commandInstall(args[1] || 'all');
+    commandInstall(cleanedArgs[1] || 'all');
     break;
   case 'serve':
   case 'start':

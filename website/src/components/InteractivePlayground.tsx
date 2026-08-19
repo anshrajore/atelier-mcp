@@ -1,8 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { Play, Check, AlertTriangle, ShieldAlert, Sparkles, RefreshCw, Wand2 } from "lucide-react";
+import {
+  Play,
+  Check,
+  AlertTriangle,
+  ShieldAlert,
+  Sparkles,
+  RefreshCw,
+  Wand2,
+  CheckCircle2,
+  XCircle,
+} from "lucide-react";
 
 interface Preset {
   id: string;
@@ -82,8 +91,9 @@ interface Finding {
 export const InteractivePlayground = () => {
   const [selectedPreset, setSelectedPreset] = useState<Preset>(PRESETS[0]);
   const [code, setCode] = useState(PRESETS[0].code);
+  const [originalCode, setOriginalCode] = useState(PRESETS[0].code);
+  const [viewMode, setViewMode] = useState<"editor" | "diff">("editor");
   const [isAuditing, setIsAuditing] = useState(false);
-  const [hasAudited, setHasAudited] = useState(true);
   const [findings, setFindings] = useState<Finding[]>([
     {
       ruleId: "BASE-UI-101",
@@ -107,7 +117,6 @@ export const InteractivePlayground = () => {
   const runAudit = (sourceCode: string) => {
     setIsAuditing(true);
     setTimeout(() => {
-      const isUI = /className|<div>|<button|<nav|styled/i.test(sourceCode);
       const newFindings: Finding[] = [];
       let newScore = 100;
 
@@ -185,13 +194,14 @@ export const InteractivePlayground = () => {
       setFindings(newFindings);
       setScore(Math.max(0, newScore));
       setIsAuditing(false);
-      setHasAudited(true);
     }, 250);
   };
 
   const handlePresetSelect = (preset: Preset) => {
     setSelectedPreset(preset);
     setCode(preset.code);
+    setOriginalCode(preset.code);
+    setViewMode("editor");
     runAudit(preset.code);
   };
 
@@ -219,8 +229,17 @@ export const InteractivePlayground = () => {
     }
 
     setCode(fixed);
+    setViewMode("diff");
     runAudit(fixed);
   };
+
+  // Rule categories metrics
+  const categories = [
+    { name: "Spacing Scale", status: findings.some(f => f.ruleId === "BASE-UI-101") ? "failed" : "passed" },
+    { name: "Focus Indicators", status: findings.some(f => f.ruleId === "BASE-UI-108") ? "failed" : "passed" },
+    { name: "Secret Leak Protection", status: findings.some(f => f.ruleId === "BASE-BE-201") ? "failed" : "passed" },
+    { name: "Schema Validation", status: findings.some(f => f.ruleId === "BASE-BE-202") ? "failed" : "passed" },
+  ];
 
   return (
     <section id="playground" className="py-20 bg-[#fafafa] dark:bg-zinc-900/60 border-t border-b border-[#e2e8f0] dark:border-zinc-800 transition-colors">
@@ -264,12 +283,40 @@ export const InteractivePlayground = () => {
             {/* Window Bar */}
             <div className="flex items-center justify-between px-5 py-3.5 bg-[#151922] dark:bg-zinc-900 border-b border-[#2d3748] dark:border-zinc-800 text-xs">
               <div className="flex items-center gap-2">
-                <div className="h-3 w-3 rounded-full bg-[#ff5f56]" />
-                <div className="h-3 w-3 rounded-full bg-[#ffbd2e]" />
-                <div className="h-3 w-3 rounded-full bg-[#27c93f]" />
+                <div className="h-3.5 w-3.5 rounded-full bg-[#ff5f56]" />
+                <div className="h-3.5 w-3.5 rounded-full bg-[#ffbd2e]" />
+                <div className="h-3.5 w-3.5 rounded-full bg-[#27c93f]" />
                 <span className="ml-2 font-mono text-[11px] text-[#94a3b8]">source_snippet.tsx</span>
               </div>
               <div className="flex items-center gap-2">
+                <div className="flex items-center bg-[#1e2330] border border-[#2d3748] rounded-lg p-0.5 mr-2">
+                  <button
+                    onClick={() => setViewMode("editor")}
+                    className={`px-2.5 py-1 rounded-md text-[10px] font-semibold transition-all ${
+                      viewMode === "editor"
+                        ? "bg-[#ff7a00] text-white"
+                        : "text-gray-400 hover:text-white"
+                    }`}
+                  >
+                    Editor
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (code === originalCode) {
+                        handleAutoFix();
+                      } else {
+                        setViewMode("diff");
+                      }
+                    }}
+                    className={`px-2.5 py-1 rounded-md text-[10px] font-semibold transition-all ${
+                      viewMode === "diff"
+                        ? "bg-[#ff7a00] text-white"
+                        : "text-gray-400 hover:text-white"
+                    }`}
+                  >
+                    Diff View
+                  </button>
+                </div>
                 <button
                   onClick={handleAutoFix}
                   className="px-3 py-1 rounded-full bg-[#ff7a00] hover:bg-[#ff8b26] text-white text-[11px] font-semibold flex items-center gap-1 transition-all shadow-sm"
@@ -288,22 +335,45 @@ export const InteractivePlayground = () => {
               </div>
             </div>
 
-            {/* Editable Codearea */}
-            <div className="p-5 flex-1 flex flex-col">
-              <textarea
-                value={code}
-                onChange={(e) => {
-                  setCode(e.target.value);
-                  runAudit(e.target.value);
-                }}
-                className="w-full flex-1 min-h-[260px] bg-transparent text-gray-200 font-mono text-xs leading-relaxed focus:outline-none resize-none selection:bg-[#ff7a00] selection:text-white"
-                spellCheck={false}
-              />
-              <div className="pt-3 border-t border-[#2d3748] flex items-center justify-between text-[11px] text-[#94a3b8] font-mono">
-                <span>AST Parser: Heuristic v1.0.0</span>
-                <span>Type directly to test your own code</span>
+            {/* View Mode Router */}
+            {viewMode === "editor" ? (
+              <div className="p-5 flex-1 flex flex-col">
+                <textarea
+                  value={code}
+                  onChange={(e) => {
+                    setCode(e.target.value);
+                    runAudit(e.target.value);
+                  }}
+                  className="w-full flex-1 min-h-[280px] bg-transparent text-gray-200 font-mono text-xs leading-relaxed focus:outline-none resize-none selection:bg-[#ff7a00] selection:text-white"
+                  spellCheck={false}
+                />
+                <div className="pt-3 border-t border-[#2d3748] flex items-center justify-between text-[11px] text-[#94a3b8] font-mono">
+                  <span>AST Parser: Compiler API v2.0.0</span>
+                  <span>Type directly to test your own code</span>
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="flex-1 grid grid-cols-2 divide-x divide-[#2d3748] bg-[#1a1f2c]">
+                {/* Left Side: Original */}
+                <div className="p-5 overflow-y-auto max-h-[350px]">
+                  <div className="text-[10px] font-mono text-rose-400 font-semibold mb-2 uppercase tracking-wider flex items-center gap-1">
+                    <XCircle className="h-3 w-3" /> Original Code
+                  </div>
+                  <pre className="font-mono text-[11px] text-gray-400 whitespace-pre-wrap leading-relaxed">
+                    <code>{originalCode}</code>
+                  </pre>
+                </div>
+                {/* Right Side: Remediated */}
+                <div className="p-5 overflow-y-auto max-h-[350px] bg-[#16222f]/40">
+                  <div className="text-[10px] font-mono text-emerald-400 font-semibold mb-2 uppercase tracking-wider flex items-center gap-1">
+                    <CheckCircle2 className="h-3.5 w-3.5" /> Remediated Code
+                  </div>
+                  <pre className="font-mono text-[11px] text-emerald-100 whitespace-pre-wrap leading-relaxed">
+                    <code>{code}</code>
+                  </pre>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Critic Findings Output Panel (5 cols) */}
@@ -331,13 +401,34 @@ export const InteractivePlayground = () => {
               </div>
             </div>
 
+            {/* Visual Stats Rules Row */}
+            <div className="py-4 border-b border-[#f1f5f9] dark:border-zinc-800 grid grid-cols-2 gap-2 text-[10px] font-mono">
+              {categories.map((cat, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-center justify-between p-2 rounded-xl bg-[#fafafa] dark:bg-zinc-950 border border-[#e2e8f0] dark:border-zinc-800"
+                >
+                  <span className="text-[#64748b] dark:text-zinc-400 truncate mr-1">{cat.name}</span>
+                  {cat.status === "passed" ? (
+                    <span className="text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-0.5">
+                      <Check className="h-3 w-3 stroke-[3]" /> OK
+                    </span>
+                  ) : (
+                    <span className="text-rose-500 font-semibold flex items-center gap-0.5">
+                      <AlertTriangle className="h-3 w-3 stroke-[3]" /> FAIL
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+
             {/* Findings List */}
-            <div className="mt-4 flex-1 flex flex-col gap-3 overflow-y-auto max-h-[320px] pr-1">
+            <div className="mt-4 flex-1 flex flex-col gap-3 overflow-y-auto max-h-[220px] pr-1">
               {findings.length === 0 ? (
-                <div className="flex-1 flex flex-col items-center justify-center text-center p-6 text-emerald-600 dark:text-emerald-400">
-                  <Check className="h-10 w-10 mb-2 stroke-[2.5]" />
+                <div className="flex-1 flex flex-col items-center justify-center text-center py-6 text-emerald-600 dark:text-emerald-400">
+                  <CheckCircle2 className="h-9 w-9 mb-2 stroke-[2]" />
                   <div className="font-bold text-sm">100% Quality Gate Conformance</div>
-                  <p className="text-xs text-[#64748b] dark:text-zinc-400 mt-1 max-w-xs">
+                  <p className="text-xs text-[#64748b] dark:text-zinc-400 mt-1 max-w-xs leading-relaxed">
                     No design clichés, spacing bugs, or security vulnerabilities detected in this AST pass.
                   </p>
                 </div>
